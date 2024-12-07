@@ -1,7 +1,9 @@
 import app from "server";
+import http from "http";
+import { PORT } from "helpers/constants";
 
-const port = process.env.PORT || 3003;
+const server = http.createServer(app);
 
-app.listen(port, () => {
-  console.log(`Server is running at http://localhost:${port}`);
+server.listen(PORT, () => {
+  console.log(`Server is running at http://localhost:${PORT}`);
 });
