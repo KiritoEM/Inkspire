@@ -3,7 +3,38 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql" 
-  url      = env("DATABASE_URL")
+  provider = "mysql" 
+  url      = env("DATfABASE_URL")
 }
+
+model User {
+  id Int @id @default(autoincrement())
+  pseudo  String 
+  location String?
+  email String
+  password String
+  createdAt DateTime @default(now())
+  user_type Role @default(USER)
+  posts Post[]
+
+  @@unique([id, email, pseudo])
+  @@map("user")
+}
+
+model Post {
+  id Int @id @default(autoincrement())
+  title String @db.Char(150)
+  description String 
+  user User? @relation(fields: [userId], references: [id])
+  userId Int?
+
+  @@unique([id, userId])
+  @@map("posts")
+}
+
+enum Role {
+  USER
+  ARTIST
+}
+
 
