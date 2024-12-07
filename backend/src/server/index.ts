@@ -1,6 +1,7 @@
 import express, { Express, Request, Response } from "express";
 import { config } from "dotenv";
 import cors from "cors";
+import appRouter from "@/routes";
 
 config();
 
@@ -13,7 +14,7 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Server Running !!!");
 });
 
-//routes
-app.use("/api/auth")
+//api
+app.use("/api/", appRouter)
 
 export default app;
