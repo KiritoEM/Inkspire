@@ -9,7 +9,7 @@
     "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true,
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["*"]
     }
   },
   "include": ["src/**/*.ts"],
