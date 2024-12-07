@@ -7,10 +7,10 @@
     "baseUrl": "./src/",
     "rootDir": "./src",
     "forceConsistentCasingInFileNames": true,
-    "esModuleInterop": true
-    // "paths": {
-    //   "@": ""
-    // }
+    "esModuleInterop": true,
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules"]
