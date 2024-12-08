@@ -1,5 +1,6 @@
 import { CustomHttpError } from "@/helpers/HttpError";
 import { PrismaClient } from "@prisma/client";
+
 const prisma = new PrismaClient();
 
 const checkDatabaseConnection = async () => {

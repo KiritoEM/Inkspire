@@ -1,9 +1,17 @@
 import app from "server";
 import http from "http";
 import { PORT } from "helpers/constants";
+import { checkDatabaseConnection } from "./database";
 
-const server = http.createServer(app);
+const main = async () => {
+  await checkDatabaseConnection();
 
-server.listen(PORT, () => {
-  console.log(`Server is running at http://localhost:${PORT}`);
-});
+  const server = http.createServer(app);
+
+  server.listen(PORT, () => {
+    console.log(`Server is running at http://localhost:${PORT}`);
+  });
+}
+
+main();
+

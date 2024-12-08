@@ -2,10 +2,8 @@ import express, { Express, Request, Response } from "express";
 import { config } from "dotenv";
 import cors from "cors";
 import appRouter from "@/routes";
-import { checkDatabaseConnection } from "@/database";
 
 config();
-checkDatabaseConnection();
 
 const app: Express = express();
 
