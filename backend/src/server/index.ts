@@ -1,9 +1,6 @@
 import express, { Express, Request, Response } from "express";
-import { config } from "dotenv";
 import cors from "cors";
 import rootRouter from "@/routes";
-
-config();
 
 const app: Express = express();
 
