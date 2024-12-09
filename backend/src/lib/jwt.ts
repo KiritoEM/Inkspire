@@ -1,12 +1,13 @@
 import { TOKEN_EXPIRED, TOKEN_SECRET } from "@/helpers/constants";
-import { JwtPayload, sign } from "jsonwebtoken"
+import { JwtPayload, sign } from "jsonwebtoken";
 
-const createJWT = (data: JwtPayload) => {
+const createJWT = (data: JwtPayload, tokenSecret?: string) => {
     if (Object.keys(data).length === 0) {
-        return new Error("Data cannot be empty for paylod !!!");
+        return new Error("Data cannot be empty for payload !!!");
     }
 
-    return sign(data, TOKEN_SECRET, TOKEN_EXPIRED);
-}
+    const secret = tokenSecret ?? TOKEN_SECRET;
+    return sign(data, secret, TOKEN_EXPIRED);
+};
 
-export { createJWT }
+export { createJWT };
