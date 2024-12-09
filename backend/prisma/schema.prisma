@@ -14,7 +14,7 @@ model User {
   email String @unique
   password String
   createdAt DateTime @default(now())
-  user_type Role @default(USER)
+  role Role @default(USER)
   posts Post[]
 
   @@unique([id, email, pseudo])
