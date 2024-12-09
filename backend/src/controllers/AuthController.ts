@@ -11,6 +11,8 @@ import { createJWT } from "@/lib/jwt";
 class AuthController {
     async signUp(req: Request, res: Response) {
         const accountDetails = req.body;
+        console.log(accountDetails);
+        
         const _vd = parseWithSchema({ data: accountDetails, schema: signupSchema, errorMessage: "An error was occured in signupZodSchema !!!" });
 
         const userExist = await checkUser(_vd.email);
@@ -26,7 +28,7 @@ class AuthController {
             }
         })
         const token = createJWT({ userId: user.id, role: user.role });
-        sendResponse(res, SUCCESS_CODE.CREATED, "Accoutn created successfull !!!", { token });
+        sendResponse(res, SUCCESS_CODE.CREATED, "Account created successfull !!!", { token });
     }
 }
 

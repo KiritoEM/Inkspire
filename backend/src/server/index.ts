@@ -1,7 +1,7 @@
 import express, { Express, Request, Response } from "express";
 import { config } from "dotenv";
 import cors from "cors";
-import appRouter from "@/routes";
+import rootRouter from "@/routes";
 
 config();
 
@@ -15,6 +15,6 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 //api
-app.use("/api/", appRouter)
+app.use("/node-api", rootRouter)
 
 export default app;

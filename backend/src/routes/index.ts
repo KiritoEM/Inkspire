@@ -1,8 +1,11 @@
-import authModule from "@/modules/authModule";
-import { Router } from "express";
+import { Request, Response, Router } from "express";
+import AuthRouter from "./auth";
 
-const appRouter: Router = Router();
+const rootRouter: Router = Router();
 
-appRouter.post("/auth", authModule.router);
+rootRouter.use("/auth", AuthRouter);
+rootRouter.get("/test", (req: Request, res: Response) => {
+    res.send("Root test route");
+});
 
-export default appRouter;
+export default rootRouter;
