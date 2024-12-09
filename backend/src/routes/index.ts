@@ -1,8 +1,10 @@
 import authModule from "@/modules/authModule";
-import { Request, Response, Router } from "express";
+import emailModule from "@/modules/emailModule";
+import { Router } from "express";
 
 const rootRouter: Router = Router();
 
 rootRouter.use("/auth", authModule.router);
+rootRouter.use("/email", emailModule.router);
 
 export default rootRouter;

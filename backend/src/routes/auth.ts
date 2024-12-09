@@ -4,7 +4,6 @@ import { erroHandler as err_hdl } from "@/middlewares/error";
 
 const AuthRouter: Router = Router();
 
-AuthRouter.post("/send_email", err_hdl(AuthController.sendEmail));
 AuthRouter.post("/signup/:token", err_hdl(AuthController.signUp));
 AuthRouter.post("/signin", err_hdl(AuthController.signIn));
 
