@@ -7,4 +7,9 @@ const signupSchema = z.strictObject({
     location: z.string().min(2, { message: "Location is required" })
 })
 
-export { signupSchema }
+const loginSchema = z.strictObject({
+    email: z.string().email({ message: "Email is required !!!" }),
+    password: z.string().min(8, { message: "Password must be 8 characters !!!" }),
+})
+
+export { signupSchema, loginSchema }

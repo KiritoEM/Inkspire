@@ -1,4 +1,5 @@
 import { z } from "zod";
-import { signupSchema } from "./";
+import { loginSchema, signupSchema } from "./";
 
-export type SignupSchema = z.infer<typeof signupSchema>
+export type SignupSchema = z.infer<typeof signupSchema>;
+export type LoginSchema = z.infer<typeof loginSchema>

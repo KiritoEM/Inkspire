@@ -1,7 +1,6 @@
 import parseWithSchema from "@/helpers/parseWithSchema";
-import { signupSchema } from "@/schemas";
+import { loginSchema, signupSchema } from "@/schemas";
 import { Request, Response } from "express";
-import { checkUser } from "./helpers/CheckUser";
 import { sendErrorResponse, sendResponse } from "@/helpers/sendResponse";
 import { EMAIL_TOKEN_SECRET, ERROR_CODE, SUCCESS_CODE, TWO_STEP_HTML } from "@/helpers/constants";
 import { prisma } from "@/database";
@@ -10,6 +9,7 @@ import { createJWT, decodeJWT } from "@/lib/jwt";
 import { sendEmail } from "@/lib/mailing";
 import { SignupWithJWT } from "./helpers/types";
 import { SignupSchema } from "@/schemas/SchemaTypes";
+import { checkUser, createAccount, loginUser } from "@/services/authServices";
 
 class AuthController {
     async sendEmail(req: Request, res: Response) {
@@ -17,9 +17,9 @@ class AuthController {
 
         const user_vd = parseWithSchema({ data: accountDetails, schema: signupSchema, errorMessage: "An error was occured in signupZodSchema !!!" });
 
-        const userExist = await checkUser(user_vd.email);
+        const accountExist = await checkUser(user_vd.email);
 
-        if (userExist) {
+        if (accountExist) {
             return sendErrorResponse(res, ERROR_CODE.BAQ_REQUEST, "User already exist with this email !!!")
         }
 
@@ -44,9 +44,9 @@ class AuthController {
         let userPayload: SignupWithJWT;
         userPayload = decodeJWT(token, EMAIL_TOKEN_SECRET) as SignupWithJWT;
 
-        const userExist = await checkUser(userPayload.email);
+        const accountExist = await checkUser(userPayload.email);
 
-        if (userExist) {
+        if (accountExist) {
             return sendErrorResponse(res, ERROR_CODE.BAQ_REQUEST, "User already exist with this email !!!")
         }
 
@@ -57,9 +57,7 @@ class AuthController {
             location: userPayload.location
         }
 
-        const user = await prisma.user.create({
-            data: userData
-        })
+        const user = await createAccount(userData);
 
         if (!user) {
             return sendErrorResponse(res, ERROR_CODE.BAQ_REQUEST, "An error was occured when creating user !!!")
@@ -67,6 +65,21 @@ class AuthController {
 
         const userToken = createJWT({ ...userData });
         return sendResponse(res, SUCCESS_CODE.CREATED, "Account created successfully !!!", { token: userToken });
+    }
+
+    async signIn(req: Request, res: Response): Promise<Response<any, Record<string, any>>> {
+        const accountDetails = req.body;
+
+        const user_vd = parseWithSchema({ data: accountDetails, schema: loginSchema, errorMessage: "An error was occured in loginZodSchema !!!" });
+
+        const user = await loginUser(user_vd);
+
+        if (!user) {
+            return sendErrorResponse(res, ERROR_CODE.BAQ_REQUEST, "An error was occured when creating user !!!")
+        }
+
+        const userToken = createJWT({ ...user_vd });
+        return sendResponse(res, SUCCESS_CODE.CREATED, "User logIn successfully !!!", { token: userToken });
     }
 }
 

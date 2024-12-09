@@ -1,8 +1,12 @@
 import { BCRYPT_SALT } from "@/helpers/constants";
-import bcrypt, { hashSync } from "bcrypt";
+import bcrypt, { hashSync, compare } from "bcrypt";
 
-const hashPassword = (password: string) => {
+const hashPassword = (password: string): string => {
     return hashSync(password, BCRYPT_SALT);
 }
 
-export { hashPassword }
+const comparePassword = async (password: string, hashedPassword: string): Promise<boolean> => {
+    return await compare(password, hashedPassword);
+}
+
+export { hashPassword, comparePassword }
