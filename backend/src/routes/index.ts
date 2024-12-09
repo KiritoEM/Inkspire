@@ -1,8 +1,8 @@
+import authModule from "@/modules/authModule";
 import { Router } from "express";
-import authRouter from "./auth";
 
 const appRouter: Router = Router();
 
-appRouter.post("/auth", authRouter);
+appRouter.post("/auth", authModule.router);
 
 export default appRouter;

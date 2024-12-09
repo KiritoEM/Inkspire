@@ -30,6 +30,7 @@
     "express": "^4.21.2",
     "install": "^0.13.0",
     "npm": "^10.9.2",
-    "tsconfig-paths": "^4.2.0"
+    "tsconfig-paths": "^4.2.0",
+    "zod": "^3.23.8"
   }
 }

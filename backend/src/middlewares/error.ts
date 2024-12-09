@@ -1,4 +1,4 @@
-import { CustomHttpError } from "@/helpers/HttpError";
+import { HttpException } from "@/helpers/HttpException";
 import { NextFunction, Request, Response } from "express"
 
 const erroHandler = (method: Function) => {
@@ -7,7 +7,7 @@ const erroHandler = (method: Function) => {
             await method(req, res, next);
         }
         catch (err) {
-            if (err instanceof CustomHttpError) {
+            if (err instanceof HttpException) {
                 return res.status(err.statusCode).json({
                     err: err.message,
                     details: err.details
@@ -18,6 +18,9 @@ const erroHandler = (method: Function) => {
                 error: "Internal Server Error",
                 message: err instanceof Error ? err.message : "An unexpected error occurred",
             });
+        }
+        finally {
+            console.log("=============== no error in middleware ===============");
         }
     }
 }

@@ -11,7 +11,7 @@ model User {
   id Int @id @default(autoincrement())
   pseudo  String 
   location String?
-  email String
+  email String @unique
   password String
   createdAt DateTime @default(now())
   user_type Role @default(USER)
