@@ -4,7 +4,7 @@ import EmailController from "@/controllers/EmailController";
 
 const EmailRouter: Router = Router();
 
-EmailRouter.post("/two_step/send", err_hdl(EmailController.sendEmail));
+EmailRouter.post("/two_step/send", err_hdl(EmailController.sendAuthEmail));
 
 EmailRouter.get("/", (req: Request, res: Response) => {
     res.send("EmailRouter test route");

@@ -15,6 +15,7 @@ model User {
   password String
   createdAt DateTime @default(now())
   role Role @default(USER)
+  banned Boolean? @default(false)
   posts Post[]
 
   @@unique([id, email, pseudo])
