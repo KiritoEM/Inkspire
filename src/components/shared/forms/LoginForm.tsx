@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "../../../lib/form-validation";
 import { FloatingLabelInput } from "./FloatingInput";
 import { Eye, EyeOff } from "lucide-react"
+import { Checkbox } from "../ui/checkbox";
 
 /**
  * A component that renders a form for a user to logIn.
@@ -69,7 +70,15 @@ const LoginForm: FC = (): JSX.Element => {
                         )}
                     />
                     <div className="forgot flex justify-between">
-                        <div className="checkbox"></div>
+                        <div className="checkbox flex items-center space-x-2">
+                            <Checkbox id="terms" />
+                            <label
+                                htmlFor="terms"
+                                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                            >
+                                Se souvenir de moi
+                            </label>
+                        </div>
                         <p className="text-blue-500 text-sm">Mot de passe oublié?</p>
                     </div>
                 </form>
