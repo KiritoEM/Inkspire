@@ -4,4 +4,10 @@ interface RootLayout {
     children: ReactNode;
 }
 
-export type { RootLayout }
+interface Response<T> {
+    status: "success" | "error";
+    message: string;
+    details?: T;
+}
+
+export type { RootLayout, Response }
