@@ -26,7 +26,7 @@ const LoginForm: FC = (): JSX.Element => {
     });
 
     return (
-        <div className="login__right max-w-[400px] w-full mt-16 bg-white pb-6 rounded-t-lg p-8 flex flex-col gap-7">
+        <div className="login__right max-w-[400px] 2xl:max-w-[440px] w-full mt-0 lg:mt-16 mb-7 lg:mb-0 bg-white pb-6 rounded-b-lg lg:rounded-b-none rounded-t-lg p-[26px] md:p-8 flex flex-col gap-7">
             <header>
                 <p className="text-secondary/80">Ravis de vous revoir!</p>
                 <h4 className="text-2xl mt-1  text-secondary font-semibold">Se connecter à votre compte</h4>
@@ -95,7 +95,7 @@ const LoginForm: FC = (): JSX.Element => {
 
             <GoogleauthForm />
 
-            <p className="text-secondary text-center">Nouveau ici? <span className="text-blue-500">Créér un compte</span></p>
+            <p className="text-secondary text-center">Nouveau ici? <b className="text-blue-500">Créér un compte</b></p>
         </div>
     );
 };

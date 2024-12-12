@@ -73,3 +73,7 @@ body {
   font-family: "Urbanist", sans-serif;
   font-weight: 500;
 }
+
+.login-container {
+  align-items: center;
+}
