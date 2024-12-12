@@ -11,7 +11,7 @@ const Login: FC = (): JSX.Element => {
     return (
         <LoginLayout>
             <section className="login w-full overflow-x-hidden bg-[url('/images/login-bg.png')] min-h-screen bg-cover" id="login">
-                <div className="login-container container mx-auto px-6 md:px-14 xl:px-20 2xl:px-32 flex flex-col lg:flex-row justify-center lg:justify-between lg:gap-16 item-center lg:items-end min-h-screen">
+                <div className="login-container container mx-auto px-6 md:px-14 xl:px-20 2xl:px-32 flex flex-col lg:flex-row justify-center lg:justify-between lg:gap-16 item-center min-h-screen">
                     <div className="login__left max-w-[400px] w-full mb-16 mt-10 lg:mt-0">
                         <img src="/logo_2.svg" alt="logo" className="w-[160px] lg:w-[180px]" />
 
