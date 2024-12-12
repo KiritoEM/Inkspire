@@ -7,6 +7,14 @@ import { createJWT, decodeJWT } from "@/lib/jwt";
 import { sendEmail } from "@/lib/mailing";
 import { checkUser } from "@/services/authServices";
 
+/**
+ * This function is used to send a two step verification email to the user
+ * when he tries to signup with an email that is not already in the database
+ * @param req The request object
+ * @param res The response object
+ * @returns A response object containing a jwt token that will be used to
+ * confirm the user's email
+ */
 const sendAuthEmail = async (req: Request, res: Response) => {
     const accountDetails = req.body;
 

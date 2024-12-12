@@ -11,5 +11,4 @@ AuthRouter.get("/", (req: Request, res: Response) => {
     res.send("Auth test route");
 });
 
-
 export default AuthRouter;
