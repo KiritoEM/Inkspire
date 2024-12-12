@@ -15,7 +15,9 @@ const transporter = nodemailer.createTransport({
  * @param {string} text The text content of the email
  * @returns {Promise<unknown>} The promise returned by transporter.sendMail
  */
-const sendEmail = (email: string, html: string, text: string) => {
+
+//@ts-ignore
+const sendEmail = (email: string, html: string, text: string): Promise<unknown> => {
     const mailOptions = {
         from: process.env.EMAIL_SENDER,
         to: `${email}`,

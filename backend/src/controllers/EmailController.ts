@@ -15,7 +15,7 @@ import { checkUser } from "@/services/authServices";
  * @returns A response object containing a jwt token that will be used to
  * confirm the user's email
  */
-const sendAuthEmail = async (req: Request, res: Response) => {
+const sendAuthEmail = async (req: Request, res: Response): Promise<Response<any, Record<string, any>>> => {
     const accountDetails = req.body;
 
     const user_vd = parseWithSchema({ data: accountDetails, schema: signupSchema, errorMessage: "An error was occured in signupZodSchema !!!" });
@@ -30,7 +30,7 @@ const sendAuthEmail = async (req: Request, res: Response) => {
 
     const emailSent = sendEmail(user_vd.email, TWO_STEP_HTML(emailToken as string), "Veuillez cliquez sur le bouton ci dessous pour confirmer votre inscription sur Inkspire");
 
-    if (emailSent) {
+    if (await emailSent) {
         return sendResponse(res, SUCCESS_CODE.ACCEPTED, "Email sent successfully !!!", { emailToken });
     }
 
