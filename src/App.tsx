@@ -1,12 +1,11 @@
-import { Button } from "./components/ui/button";
+import { Fragment } from "react/jsx-runtime";
+import AppRoutes from "./routes";
 
 const App = () => {
   return (
-    <div>
-      <Button>
-        Click Me
-      </Button>
-    </div>
+    <Fragment>
+      <AppRoutes />
+    </Fragment>
   );
 };
 
