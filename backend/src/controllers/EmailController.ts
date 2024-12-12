@@ -3,7 +3,7 @@ import { signupSchema } from "@/schemas";
 import { Request, Response } from "express";
 import { sendErrorResponse, sendResponse } from "@/helpers/sendResponse";
 import { EMAIL_TOKEN_SECRET, ERROR_CODE, SUCCESS_CODE, TWO_STEP_HTML } from "@/helpers/constants";
-import { createJWT, decodeJWT } from "@/lib/jwt";
+import { createJWT } from "@/lib/jwt";
 import { sendEmail } from "@/lib/mailing";
 import { checkUser } from "@/services/authServices";
 
