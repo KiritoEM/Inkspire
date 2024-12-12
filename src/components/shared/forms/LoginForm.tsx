@@ -5,8 +5,10 @@ import { LoginSchemaTypes } from "../../../lib/form-validation/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "../../../lib/form-validation";
 import { FloatingLabelInput } from "./FloatingInput";
-import { Eye, EyeOff } from "lucide-react"
+import { Eye, EyeOff } from "lucide-react";
 import { Checkbox } from "../ui/checkbox";
+import { Button } from "../ui/button";
+import GoogleauthForm from "./GoogleauthForm";
 
 /**
  * A component that renders a form for a user to logIn.
@@ -24,7 +26,7 @@ const LoginForm: FC = (): JSX.Element => {
     });
 
     return (
-        <div className="login__right max-w-[400px] w-full bg-white h-[450px] rounded-t-lg p-8 flex flex-col gap-6">
+        <div className="login__right max-w-[400px] w-full mt-16 bg-white pb-6 rounded-t-lg p-8 flex flex-col gap-7">
             <header>
                 <p className="text-secondary/80">Ravis de vous revoir!</p>
                 <h4 className="text-2xl mt-1  text-secondary font-semibold">Se connecter à votre compte</h4>
@@ -69,7 +71,7 @@ const LoginForm: FC = (): JSX.Element => {
                             </FormItem>
                         )}
                     />
-                    <div className="forgot flex justify-between">
+                    <div className="forgot-password flex justify-between">
                         <div className="checkbox flex items-center space-x-2">
                             <Checkbox id="terms" />
                             <label
@@ -81,8 +83,19 @@ const LoginForm: FC = (): JSX.Element => {
                         </div>
                         <p className="text-blue-500 text-sm">Mot de passe oublié?</p>
                     </div>
+                    <Button type="submit" variant="secondary" className="mt-3">Se connecter</Button>
                 </form>
             </FormProvider>
+
+            <div className="or flex items-center w-full gap-3">
+                <div className="line flex-1 h-[1px] bg-input"></div>
+                <p className="text-secondary text-sm">OU</p>
+                <div className="line flex-1 h-[1px] bg-input"></div>
+            </div>
+
+            <GoogleauthForm />
+
+            <p className="text-secondary text-center">Nouveau ici? <span className="text-blue-500">Créér un compte</span></p>
         </div>
     );
 };
