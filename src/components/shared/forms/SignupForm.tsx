@@ -65,7 +65,7 @@ const SignupForm: FC = (): JSX.Element => {
     };
 
     return (
-        <div className="login__right max-w-[420px] 2xl:max-w-[440px] w-full mt-0 min-h-full md:min-h-auto lg:mt-16 lg:mb-16 bg-white pb-6 lg:rounded-lg p-[26px] md:p-8 flex flex-col gap-7">
+        <div className="signup__form max-w-[420px] 2xl:max-w-[440px] w-full mt-0 min-h-full md:min-h-auto lg:mt-16 lg:mb-16 bg-white pb-6 lg:rounded-lg p-[26px] md:p-8 flex flex-col gap-7">
             <header>
                 <p className="text-secondary/80">Créér votre compte</p>
                 <h4 className="text-2xl mt-1  text-secondary font-semibold">Rejoignez-nous en créant un compte</h4>
