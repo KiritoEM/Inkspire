@@ -12,6 +12,7 @@ import GoogleauthForm from "./GoogleauthForm";
 import { Link } from "react-router-dom";
 import authActions from "../../../actions/auth.actions";
 import { toast } from "react-toastify";
+import useLoading from "../../../hooks/useLoading";
 
 /**
  * A component that renders a form for a user to logIn.
@@ -19,6 +20,7 @@ import { toast } from "react-toastify";
  * @returns A JSX element representing the login form.
  */
 const LoginForm: FC = (): JSX.Element => {
+    const { loading, stopLoading, startLoading } = useLoading();
     const [show, setShow] = useState<boolean>(false);
     const form = useForm<LoginSchemaTypes>({
         resolver: zodResolver(loginSchema),
@@ -28,20 +30,24 @@ const LoginForm: FC = (): JSX.Element => {
         }
     });
 
-    const handleSubmit = async (data: LoginSchemaTypes) => {
+    const handleSubmitLogin = async (data: LoginSchemaTypes) => {
+        startLoading
+
         const response = await authActions.LOGIN(data);
 
         if (response.status === "success") {
             toast.success("Utilisateur authentifié avec succés !!!", {
                 position: "bottom-center",
                 autoClose: 5000,
-            })
+            });
+            stopLoading();
         }
         else {
             toast.error("Un erreur s'est produit !!!", {
                 position: "bottom-center",
                 autoClose: 5000,
             })
+            stopLoading();
         }
     };
 
@@ -53,7 +59,7 @@ const LoginForm: FC = (): JSX.Element => {
             </header>
 
             <FormProvider {...form}>
-                <form action="post" className="flex flex-col gap-4" onSubmit={form.handleSubmit(handleSubmit)}>
+                <form action="post" className="flex flex-col gap-4" onSubmit={form.handleSubmit(handleSubmitLogin)}>
                     <FormField
                         control={form.control}
                         name="email"
@@ -100,7 +106,7 @@ const LoginForm: FC = (): JSX.Element => {
                             Se souvenir de moi
                         </label>
                     </div>
-                    <Button type="submit" variant="secondary" className="mt-3">Se connecter</Button>
+                    <Button type="submit" isLoading={loading} variant="secondary" className="mt-3">{loading ? "Chargement..." : "Se connecter"}</Button>
                 </form>
             </FormProvider>
 

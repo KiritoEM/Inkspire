@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import React, { FC, useState } from "react";
 import { FormControl, FormField, FormItem, FormMessage } from "../ui/form";
 import { FormProvider, useForm } from "react-hook-form";
 import { SignupSchemaTypes } from "../../../lib/form-validation/types";
@@ -21,6 +21,8 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import authActions from "../../../actions/auth.actions";
 import useLoading from "../../../hooks/useLoading";
+import { Progress } from "../ui/progress";
+import { evaluatePasswordStrength } from "../../../helpers/evaluatePassword";
 
 /**
  * A component that renders a form for a user to signUp.
@@ -29,6 +31,8 @@ import useLoading from "../../../hooks/useLoading";
  */
 const SignupForm: FC = (): JSX.Element => {
     const [show, setShow] = useState<boolean>(false);
+    const [passwordLength, setPasswordLength] = useState<number>(0);
+    const [passwordLevel, setPasswordLevel] = useState<string>("");
     const { loading, stopLoading, startLoading } = useLoading();
     const form = useForm<SignupSchemaTypes>({
         resolver: zodResolver(signupSchema),
@@ -115,15 +119,34 @@ const SignupForm: FC = (): JSX.Element => {
                                         id="password"
                                         label="Mot de passe"
                                         {...field}
+                                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                            field.onChange(e);
+                                            setPasswordLength(e.target.value.length);
+                                            setPasswordLevel(evaluatePasswordStrength(e.target.value) as string);
+                                        }}
                                         className="text-base"
                                         type={show ? "text" : "password"}
-                                        suffix={show ? <EyeOff size={19} className="cursor-pointer" onClick={() => setShow(!show)} /> : <Eye size={19} className="cursor-pointer" onClick={() => setShow(!show)} />}
+                                        suffix={
+                                            show ? (
+                                                <EyeOff size={19} className="cursor-pointer" onClick={() => setShow(!show)} />
+                                            ) : (
+                                                <Eye size={19} className="cursor-pointer" onClick={() => setShow(!show)} />
+                                            )
+                                        }
                                     />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
                         )}
                     />
+
+
+                    {passwordLength > 0 && <div className="password-progress">
+                        <Progress value={passwordLevel === "Fort" ? 100 : passwordLevel === "Moyen" ? 50 : 0} />
+                        <span className="text-sm text-secondary/80">{passwordLevel}</span>
+                    </div>
+                    }
+
                     <FormField
                         control={form.control}
                         name="location"
