@@ -7,7 +7,7 @@ const AuthRouter: Router = Router();
 AuthRouter.post("/signup/:token", err_hdl(AuthController.signUp));
 AuthRouter.post("/signin", err_hdl(AuthController.signIn));
 
-AuthRouter.get("/", (req: Request, res: Response) => {
+AuthRouter.get("/", (res: Response) => {
     res.send("Auth test route");
 });
 

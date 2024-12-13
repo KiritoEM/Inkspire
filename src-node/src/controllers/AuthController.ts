@@ -1,8 +1,8 @@
 import parseWithSchema from "@/helpers/parseWithSchema";
-import { loginSchema, signupSchema } from "@/schemas";
+import { loginSchema } from "@/schemas";
 import { Request, Response } from "express";
 import { sendErrorResponse, sendResponse } from "@/helpers/sendResponse";
-import { EMAIL_TOKEN_SECRET, ERROR_CODE, SUCCESS_CODE, TWO_STEP_HTML } from "@/helpers/constants";
+import { EMAIL_TOKEN_SECRET, ERROR_CODE, SUCCESS_CODE } from "@/helpers/constants";
 import { hashPassword } from "@/lib/password";
 import { createJWT, decodeJWT } from "@/lib/jwt";
 import { SignupWithJWT } from "./helpers/types";
@@ -16,7 +16,7 @@ import AuthServices from "@/services/authServices";
  * @param res The response object
  * @returns Response object containing a jwt token 
  */
-const signUp = async (req: Request, res: Response): Promise<Response<any, Record<string, any>>> => {
+const signUp = async (req: Request, res: Response): Promise<Response> => {
     const { token } = req.params;
 
     if (!token) {
@@ -59,7 +59,7 @@ const signUp = async (req: Request, res: Response): Promise<Response<any, Record
  * @param res The response object 
  * @returns Response object containing a JWT token 
  */
-const signIn = async (req: Request, res: Response): Promise<Response<any, Record<string, any>>> => {
+const signIn = async (req: Request, res: Response): Promise<Response> => {
     const accountDetails = req.body;
 
     const user_vd = parseWithSchema({ data: accountDetails, schema: loginSchema, errorMessage: "An error was occured in loginZodSchema !!!" });

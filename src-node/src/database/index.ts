@@ -13,7 +13,7 @@ const checkDatabaseConnection = async (): Promise<void> => {
         ("Prisma database connected successfully !!!");
     }
     catch (err) {
-        console.error("Please make sure your prisma database is running !!!");
+        console.error("Please make sure your prisma database is running !!!", err);
     }
 }
 

@@ -14,7 +14,7 @@ import AuthServices from "@/services/authServices";
  * @param res The response object
  * @returns A response object containing a jwt token 
  */
-const sendAuthEmail = async (req: Request, res: Response): Promise<Response<any, Record<string, any>>> => {
+const sendAuthEmail = async (req: Request, res: Response): Promise<Response> => {
     const accountDetails = req.body;
 
     const user_vd = parseWithSchema({ data: accountDetails, schema: signupSchema, errorMessage: "An error was occured in signupZodSchema !!!" });
