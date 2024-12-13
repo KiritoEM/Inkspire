@@ -2,11 +2,12 @@ import { TOKEN_EXPIRED, TOKEN_SECRET } from "@/helpers/constants";
 import { JsonWebTokenError, JwtPayload, NotBeforeError, sign, TokenExpiredError, verify } from "jsonwebtoken";
 
 /**
- * Creates a JSON Web Token (JWT) given the payload data
- * @param data the payload data to be encoded into the JWT
- * @param tokenSecret the secret key that will be used to create the JWT
+ * Creates a JSON Web Token (JWT)
+ * 
+ * @param data the payload data 
+ * @param tokenSecret the secret key 
  * @param tokenExpiration the expiration time of the JWT
- * @returns a Promise with the JWT string or an error if the data is empty
+ * @returns a Promise with the JWT string
  */
 const createJWT = (data: JwtPayload, tokenSecret?: string, tokenExpiration?: { expiresIn: string }) => {
     if (Object.keys(data).length === 0) {
@@ -20,10 +21,11 @@ const createJWT = (data: JwtPayload, tokenSecret?: string, tokenExpiration?: { e
 };
 
 /**
- * Verifies a JWT token given the token and a secret key.
+ * Verifies a JWT token
+ * 
  * @param token the JWT token to verify
- * @param tokenSecret the secret key that will be used to verify the token
- * @returns the decoded payload of the JWT token or an error if the token is invalid
+ * @param tokenSecret the secret key 
+ * @returns the decoded payload of the JWT token 
  */
 const decodeJWT = (token: string, tokenSecret?: string) => {
     try {

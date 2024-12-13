@@ -5,22 +5,21 @@ import { sendErrorResponse, sendResponse } from "@/helpers/sendResponse";
 import { EMAIL_TOKEN_EXPIRED, EMAIL_TOKEN_SECRET, ERROR_CODE, SUCCESS_CODE, TWO_STEP_HTML } from "@/helpers/constants";
 import { createJWT } from "@/lib/jwt";
 import { sendEmail } from "@/lib/mailing";
-import { checkUser } from "@/services/authServices";
+import AuthServices from "@/services/authServices";
 
 /**
- * This function is used to send a two step verification email to the user
- * when he tries to signup with an email that is not already in the database
+ * Send a two step verification email to the user
+ * 
  * @param req The request object
  * @param res The response object
- * @returns A response object containing a jwt token that will be used to
- * confirm the user's email
+ * @returns A response object containing a jwt token 
  */
 const sendAuthEmail = async (req: Request, res: Response): Promise<Response<any, Record<string, any>>> => {
     const accountDetails = req.body;
 
     const user_vd = parseWithSchema({ data: accountDetails, schema: signupSchema, errorMessage: "An error was occured in signupZodSchema !!!" });
 
-    const accountExist = await checkUser(user_vd.email);
+    const accountExist = await AuthServices.checkUser(user_vd.email);
 
     (user_vd)
 

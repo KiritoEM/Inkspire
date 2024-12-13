@@ -9,15 +9,15 @@ const transporter = nodemailer.createTransport({
 });
 
 /**
- * Send an email to the specified email address
- * @param {string} email The email address to send the email to
- * @param {string} html The HTML content of the email
- * @param {string} text The text content of the email
+ * Send an email 
+ * 
+ * @param {string} email adress
+ * @param {string} html The HTML content 
+ * @param {string} text The text content 
  * @returns {Promise<unknown>} The promise returned by transporter.sendMail
  */
 
-//@ts-ignore
-const sendEmail = (email: string, html: string, text: string): Promise<unknown> => {
+const sendEmail = (email: string, html: string, text: string) => {
     const mailOptions = {
         from: process.env.EMAIL_SENDER,
         to: `${email}`,

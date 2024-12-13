@@ -10,11 +10,11 @@ import { SignupSchema } from "@/schemas/SchemaTypes";
 import AuthServices from "@/services/authServices";
 
 /**
- * This function is used to sign up a user with an email that is not already in the database
- * The token is sent by the client in the url, and is used to get the user's informations
+ * Create a new account
+ * 
  * @param req The request object
  * @param res The response object
- * @returns A response object containing a jwt token that will be used to logIn the user
+ * @returns Response object containing a jwt token 
  */
 const signUp = async (req: Request, res: Response): Promise<Response<any, Record<string, any>>> => {
     const { token } = req.params;
@@ -22,7 +22,6 @@ const signUp = async (req: Request, res: Response): Promise<Response<any, Record
     if (!token) {
         return sendErrorResponse(res, ERROR_CODE.BAQ_REQUEST, "Not token provided !!!")
     }
-
 
     let userPayload = decodeJWT(token, EMAIL_TOKEN_SECRET) as SignupWithJWT;
 
@@ -54,15 +53,11 @@ const signUp = async (req: Request, res: Response): Promise<Response<any, Record
 }
 
 /**
- * This function is used to sign in a user with the provided email and password.
- * It validates the input data using the login schema and checks if the user exists.
- * If the user is found and the credentials are valid, it generates a JWT token
- * for the user and returns a response with the token.
+ * Sign in a user
  * 
  * @param req The request object containing the user's login credentials
- * @param res The response object to send the result of the operation
- * @returns A response object containing a JWT token if the sign-in is successful,
- * or an error message if there was an issue with the credentials
+ * @param res The response object 
+ * @returns Response object containing a JWT token 
  */
 const signIn = async (req: Request, res: Response): Promise<Response<any, Record<string, any>>> => {
     const accountDetails = req.body;
