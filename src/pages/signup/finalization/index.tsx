@@ -8,7 +8,7 @@ import { ArrowRight } from "lucide-react";
 /**
  * The signup finalization page.
  *
- * @returns A JSX.Element signup page.
+ * @returns A JSX.Element signup finalization page.
  */
 const SignupFinalisation: FC = (): JSX.Element => {
     const { token } = useParams();

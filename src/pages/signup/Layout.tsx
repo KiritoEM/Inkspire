@@ -3,10 +3,6 @@ import { FC } from "react";
 
 interface SignupLayoutProps extends RootLayout { }
 
-/**
- * The SignupLayout component is a layout component that displays
- * a signup form
- */
 const SignupLayout: FC<SignupLayoutProps> = ({ children }): JSX.Element => {
     return (
         <section className="signup w-full overflow-x-hidden bg-white md:bg-[url('/images/signup-bg.png')] min-h-screen bg-cover" id="login">

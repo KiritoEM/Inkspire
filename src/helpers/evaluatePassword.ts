@@ -1,3 +1,13 @@
+/**
+ * Evaluates the strength of a given password.
+ *
+ * @param password - The password string to evaluate.
+ * @returns A string indicating the strength of the password:
+ *          "Fort" for strong passwords,
+ *          "Moyen" for medium strength passwords,
+ *          "Faible" for weak passwords,
+ *          or an empty string if the password is not provided.
+ */
 const evaluatePasswordStrength = (password: string) => {
     let score = 0;
 

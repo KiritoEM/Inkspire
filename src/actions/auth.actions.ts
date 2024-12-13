@@ -4,10 +4,10 @@ import { LoginSchemaTypes, SignupSchemaTypes } from "../lib/form-validation/type
 import axios from "axios";
 
 /**
- * Logs a user in with the provided email and password.
+ * Logs a user in 
  *
  * @param data Object containing the user's email and password.
- * @returns A response object with a success status and a JWT token
+ * @returns A response object 
  */
 const LOGIN = async <T>(data: LoginSchemaTypes): Promise<Response<T>> => {
     try {
@@ -35,10 +35,10 @@ const LOGIN = async <T>(data: LoginSchemaTypes): Promise<Response<T>> => {
 };
 
 /**
- * Sends a signup request to the server with the provided user data.
+ * Sends a signup request to the server 
  *
- * @param data Object containing the user's signup information.
- * @returns A response object with a success status and a message.
+ * @param data Object containing the user's informations
+ * @returns A response object
  */
 const SIGNUP = async <T>(data: SignupSchemaTypes): Promise<Response<T>> => {
     try {
@@ -66,11 +66,10 @@ const SIGNUP = async <T>(data: SignupSchemaTypes): Promise<Response<T>> => {
 };
 
 /**
- * Finalizes the signup process by creating a new user account in the database
- * with the provided token.
+ * Finalizes the signup process by creating a new user account
  *
- * @param token The token provided by the user to confirm their email address.
- * @returns A response object with a success status and a message
+ * @param token The token provided by the user 
+ * @returns A response object 
  */
 const SIGNUP_FINALISATION = async <T>(token: string): Promise<Response<T>> => {
     try {
