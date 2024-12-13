@@ -65,6 +65,13 @@ const SIGNUP = async <T>(data: SignupSchemaTypes): Promise<Response<T>> => {
     }
 };
 
+/**
+ * Finalizes the signup process by creating a new user account in the database
+ * with the provided token.
+ *
+ * @param token The token provided by the user to confirm their email address.
+ * @returns A response object with a success status and a message
+ */
 const SIGNUP_FINALISATION = async <T>(token: string): Promise<Response<T>> => {
     try {
         const response = await axios.post(`${NODE_LOCAL_URL}/node-api/auth/signup/${token}`);
