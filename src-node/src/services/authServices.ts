@@ -19,7 +19,6 @@ const checkUser = async (email: string): Promise<User | null> => {
     return account;
 };
 
-
 /**
  * Creates a new user account in the database with the provided user data.
  * 

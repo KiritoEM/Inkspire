@@ -29,7 +29,7 @@ const erroHandler = (method: Function) => {
             });
         }
         finally {
-            console.log("=============== no error in middleware ===============");
+            ("=============== no error in middleware ===============");
         }
     }
 }

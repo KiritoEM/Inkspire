@@ -3,9 +3,12 @@ export const PORT = process.env.PORT || 3003;
 export const BCRYPT_SALT = 12;
 
 export const TOKEN_SECRET = "f0Gamx5LfHZIlHbPXkKP52rTlyGBfvllZQ0rd6c6ppxu0zyIrTukGLJEcYFxmj5g";
+
 export const EMAIL_TOKEN_SECRET = "KmGzkxV7gcHWGr0dI5bUU0MUB3425TAT4Y6eCU1zYZ5lUXvJQMOtGiD4D0LOvAwx";
 
 export const TOKEN_EXPIRED = { expiresIn: "27d" };
+
+export const EMAIL_TOKEN_EXPIRED = { expiresIn: "365d" };
 
 export const TWO_STEP_HTML = (token: string) => {
     return (

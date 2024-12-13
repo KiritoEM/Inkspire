@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import React, { FC, useState } from "react";
 import { FormControl, FormField, FormItem, FormMessage } from "../ui/form";
 import { FormProvider, useForm } from "react-hook-form";
 import { SignupSchemaTypes } from "../../../lib/form-validation/types";
@@ -17,7 +17,12 @@ import {
     SelectValue,
 } from "../ui/select"
 import { AVALAIBLE_LOCATION } from "../../../helpers/constants";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import authActions from "../../../actions/auth.actions";
+import useLoading from "../../../hooks/useLoading";
+import { Progress } from "../ui/progress";
+import { evaluatePasswordStrength } from "../../../helpers/evaluatePassword";
 
 /**
  * A component that renders a form for a user to signUp.
@@ -26,6 +31,10 @@ import { Link } from "react-router-dom";
  */
 const SignupForm: FC = (): JSX.Element => {
     const [show, setShow] = useState<boolean>(false);
+    const [passwordLength, setPasswordLength] = useState<number>(0);
+    const [passwordLevel, setPasswordLevel] = useState<string>("");
+    const navigate = useNavigate();
+    const { loading, stopLoading, startLoading } = useLoading();
     const form = useForm<SignupSchemaTypes>({
         resolver: zodResolver(signupSchema),
         defaultValues: {
@@ -37,11 +46,29 @@ const SignupForm: FC = (): JSX.Element => {
     });
 
     const handleSubmit = async (data: SignupSchemaTypes) => {
-        console.log(data);
+        (data)
+        startLoading();
+
+        const response = await authActions.SIGNUP(data);
+
+        if (response.status === "success") {
+            toast.success("Nous vous avons envoyé un email de vérification !!!", {
+                position: "bottom-center",
+                autoClose: 5000,
+            });
+            stopLoading();
+            navigate(`/signup/validate-email/${data.email}`);
+        } else {
+            toast.error("Une erreur s'est produite !!!", {
+                position: "bottom-center",
+                autoClose: 5000,
+            });
+            stopLoading();
+        }
     };
 
     return (
-        <div className="login__right max-w-[420px] 2xl:max-w-[440px] w-full mt-0 min-h-full md:min-h-auto lg:mt-16 lg:mb-16 bg-white pb-6 lg:rounded-lg p-[26px] md:p-8 flex flex-col gap-7">
+        <div className="signup__form max-w-[420px] 2xl:max-w-[440px] w-full mt-0 min-h-full md:min-h-auto lg:mt-16 lg:mb-16 bg-white pb-6 lg:rounded-lg p-[26px] md:p-8 flex flex-col gap-7">
             <header>
                 <p className="text-secondary/80">Créér votre compte</p>
                 <h4 className="text-2xl mt-1  text-secondary font-semibold">Rejoignez-nous en créant un compte</h4>
@@ -78,7 +105,7 @@ const SignupForm: FC = (): JSX.Element => {
                                         label="Pseudo"
                                         {...field}
                                         className="text-base"
-                                        type="email"
+                                        type="text"
                                     />
                                 </FormControl>
                                 <FormMessage />
@@ -95,15 +122,34 @@ const SignupForm: FC = (): JSX.Element => {
                                         id="password"
                                         label="Mot de passe"
                                         {...field}
+                                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                            field.onChange(e);
+                                            setPasswordLength(e.target.value.length);
+                                            setPasswordLevel(evaluatePasswordStrength(e.target.value) as string);
+                                        }}
                                         className="text-base"
                                         type={show ? "text" : "password"}
-                                        suffix={show ? <EyeOff size={19} className="cursor-pointer" onClick={() => setShow(!show)} /> : <Eye size={19} className="cursor-pointer" onClick={() => setShow(!show)} />}
+                                        suffix={
+                                            show ? (
+                                                <EyeOff size={19} className="cursor-pointer" onClick={() => setShow(!show)} />
+                                            ) : (
+                                                <Eye size={19} className="cursor-pointer" onClick={() => setShow(!show)} />
+                                            )
+                                        }
                                     />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
                         )}
                     />
+
+
+                    {passwordLength > 0 && <div className="password-progress">
+                        <Progress value={passwordLevel === "Fort" ? 100 : passwordLevel === "Moyen" ? 50 : 0} />
+                        <span className="text-sm text-secondary/80">{passwordLevel}</span>
+                    </div>
+                    }
+
                     <FormField
                         control={form.control}
                         name="location"
@@ -132,7 +178,7 @@ const SignupForm: FC = (): JSX.Element => {
                             Se souvenir de moi
                         </label>
                     </div>
-                    <Button type="submit" variant="secondary" className="mt-3">Créér un compte</Button>
+                    <Button type="submit" isLoading={loading} variant="secondary" className="mt-3">{loading ? "Chargement..." : "Créér un compte"}</Button>
                 </form>
             </FormProvider>
 
