@@ -2,7 +2,7 @@ import parseWithSchema from "@/helpers/parseWithSchema";
 import { signupSchema } from "@/schemas";
 import { Request, Response } from "express";
 import { sendErrorResponse, sendResponse } from "@/helpers/sendResponse";
-import { EMAIL_TOKEN_SECRET, ERROR_CODE, SUCCESS_CODE, TWO_STEP_HTML } from "@/helpers/constants";
+import { EMAIL_TOKEN_EXPIRED, EMAIL_TOKEN_SECRET, ERROR_CODE, SUCCESS_CODE, TWO_STEP_HTML } from "@/helpers/constants";
 import { createJWT } from "@/lib/jwt";
 import { sendEmail } from "@/lib/mailing";
 import { checkUser } from "@/services/authServices";
@@ -22,14 +22,17 @@ const sendAuthEmail = async (req: Request, res: Response): Promise<Response<any,
 
     const accountExist = await checkUser(user_vd.email);
 
+    (user_vd)
+
     if (accountExist) {
         return sendErrorResponse(res, ERROR_CODE.BAQ_REQUEST, "User already exist with this email !!!")
     }
 
-    const emailToken = createJWT({ ...user_vd }, EMAIL_TOKEN_SECRET);
+    const emailToken = createJWT({ ...user_vd }, EMAIL_TOKEN_SECRET, EMAIL_TOKEN_EXPIRED);
 
     const emailSent = sendEmail(user_vd.email, TWO_STEP_HTML(emailToken as string), "Veuillez cliquez sur le bouton ci dessous pour confirmer votre inscription sur Inkspire");
 
+    ("send")
     if (await emailSent) {
         return sendResponse(res, SUCCESS_CODE.OK, "Email sent successfully !!!", { emailToken });
     }

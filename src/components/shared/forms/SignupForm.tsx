@@ -17,7 +17,7 @@ import {
     SelectValue,
 } from "../ui/select"
 import { AVALAIBLE_LOCATION } from "../../../helpers/constants";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import authActions from "../../../actions/auth.actions";
 import useLoading from "../../../hooks/useLoading";
@@ -33,6 +33,7 @@ const SignupForm: FC = (): JSX.Element => {
     const [show, setShow] = useState<boolean>(false);
     const [passwordLength, setPasswordLength] = useState<number>(0);
     const [passwordLevel, setPasswordLevel] = useState<string>("");
+    const navigate = useNavigate();
     const { loading, stopLoading, startLoading } = useLoading();
     const form = useForm<SignupSchemaTypes>({
         resolver: zodResolver(signupSchema),
@@ -45,6 +46,7 @@ const SignupForm: FC = (): JSX.Element => {
     });
 
     const handleSubmit = async (data: SignupSchemaTypes) => {
+        (data)
         startLoading();
 
         const response = await authActions.SIGNUP(data);
@@ -55,6 +57,7 @@ const SignupForm: FC = (): JSX.Element => {
                 autoClose: 5000,
             });
             stopLoading();
+            navigate(`/signup/validate-email/${data.email}`);
         } else {
             toast.error("Une erreur s'est produite !!!", {
                 position: "bottom-center",

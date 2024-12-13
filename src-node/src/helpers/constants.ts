@@ -8,7 +8,7 @@ export const EMAIL_TOKEN_SECRET = "KmGzkxV7gcHWGr0dI5bUU0MUB3425TAT4Y6eCU1zYZ5lU
 
 export const TOKEN_EXPIRED = { expiresIn: "27d" };
 
-export const EMAIL_TOKEN_EXPIRED = { expiresIn: "5m" };
+export const EMAIL_TOKEN_EXPIRED = { expiresIn: "365d" };
 
 export const TWO_STEP_HTML = (token: string) => {
     return (

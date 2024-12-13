@@ -26,6 +26,10 @@ const signUp = async (req: Request, res: Response): Promise<Response<any, Record
 
     let userPayload = decodeJWT(token, EMAIL_TOKEN_SECRET) as SignupWithJWT;
 
+    if (userPayload instanceof Error) {
+        return sendErrorResponse(res, ERROR_CODE.BAQ_REQUEST, userPayload.message);
+    }
+
     const accountExist = await checkUser(userPayload.email);
 
     if (accountExist) {

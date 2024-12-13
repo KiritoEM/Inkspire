@@ -31,7 +31,7 @@ const LoginForm: FC = (): JSX.Element => {
     });
 
     const handleSubmitLogin = async (data: LoginSchemaTypes) => {
-        startLoading
+        startLoading();
 
         const response = await authActions.LOGIN(data);
 
