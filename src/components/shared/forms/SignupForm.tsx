@@ -152,7 +152,7 @@ const SignupForm: FC = (): JSX.Element => {
                             Se souvenir de moi
                         </label>
                     </div>
-                    <Button type="submit" isLoading={loading} variant="secondary" className="mt-3">Créér un compte</Button>
+                    <Button type="submit" isLoading={loading} variant="secondary" className="mt-3">{loading ? "Chargement..." : "Créér un compte"}</Button>
                 </form>
             </FormProvider>
 
