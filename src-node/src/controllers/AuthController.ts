@@ -7,7 +7,7 @@ import { hashPassword } from "@/lib/password";
 import { createJWT, decodeJWT } from "@/lib/jwt";
 import { SignupWithJWT } from "./helpers/types";
 import { SignupSchema } from "@/schemas/SchemaTypes";
-import { checkUser, createAccount, loginUser } from "@/services/authServices";
+import AuthServices from "@/services/authServices";
 
 /**
  * This function is used to sign up a user with an email that is not already in the database
@@ -30,7 +30,7 @@ const signUp = async (req: Request, res: Response): Promise<Response<any, Record
         return sendErrorResponse(res, ERROR_CODE.BAQ_REQUEST, userPayload.message);
     }
 
-    const accountExist = await checkUser(userPayload.email);
+    const accountExist = await AuthServices.checkUser(userPayload.email);
 
     if (accountExist) {
         return sendErrorResponse(res, ERROR_CODE.BAQ_REQUEST, "User already exist with this email !!!")
@@ -43,7 +43,7 @@ const signUp = async (req: Request, res: Response): Promise<Response<any, Record
         location: userPayload.location
     }
 
-    const user = await createAccount(userData);
+    const user = await AuthServices.createAccount(userData);
 
     if (!user) {
         return sendErrorResponse(res, ERROR_CODE.BAQ_REQUEST, "An error was occured when creating user !!!")
@@ -69,7 +69,7 @@ const signIn = async (req: Request, res: Response): Promise<Response<any, Record
 
     const user_vd = parseWithSchema({ data: accountDetails, schema: loginSchema, errorMessage: "An error was occured in loginZodSchema !!!" });
 
-    const user = await loginUser(user_vd);
+    const user = await AuthServices.loginUser(user_vd);
 
     if (!user) {
         return sendErrorResponse(res, ERROR_CODE.BAQ_REQUEST, "An error was occured when creating user !!!")

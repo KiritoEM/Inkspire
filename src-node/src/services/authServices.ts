@@ -61,4 +61,4 @@ const loginUser = async (userData: LoginSchema): Promise<User | null> => {
 };
 
 
-export { createAccount, loginUser, checkUser };
+export default { createAccount, loginUser, checkUser };
