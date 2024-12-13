@@ -7,7 +7,7 @@ interface RootLayout {
 interface Response<T> {
     status: "success" | "error";
     message: string;
-    details?: T;
+    data?: T;
 }
 
 export type { RootLayout, Response }

@@ -31,7 +31,7 @@ const sendAuthEmail = async (req: Request, res: Response): Promise<Response<any,
     const emailSent = sendEmail(user_vd.email, TWO_STEP_HTML(emailToken as string), "Veuillez cliquez sur le bouton ci dessous pour confirmer votre inscription sur Inkspire");
 
     if (await emailSent) {
-        return sendResponse(res, SUCCESS_CODE.ACCEPTED, "Email sent successfully !!!", { emailToken });
+        return sendResponse(res, SUCCESS_CODE.OK, "Email sent successfully !!!", { emailToken });
     }
 
     return sendErrorResponse(res, ERROR_CODE.BAQ_REQUEST, "An error was occured when sending twoStep email !!!");

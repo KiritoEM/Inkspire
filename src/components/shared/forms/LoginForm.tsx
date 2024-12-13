@@ -10,6 +10,8 @@ import { Checkbox } from "../ui/checkbox";
 import { Button } from "../ui/button";
 import GoogleauthForm from "./GoogleauthForm";
 import { Link } from "react-router-dom";
+import authActions from "../../../actions/auth.actions";
+import { toast } from "react-toastify";
 
 /**
  * A component that renders a form for a user to logIn.
@@ -27,14 +29,27 @@ const LoginForm: FC = (): JSX.Element => {
     });
 
     const handleSubmit = async (data: LoginSchemaTypes) => {
-        console.log(data);
+        const response = await authActions.LOGIN(data);
+
+        if (response.status === "success") {
+            toast.success("Utilisateur authentifié avec succés !!!", {
+                position: "bottom-center",
+                autoClose: 5000,
+            })
+        }
+        else {
+            toast.error("Un erreur s'est produit !!!", {
+                position: "bottom-center",
+                autoClose: 5000,
+            })
+        }
     };
 
     return (
         <div className="login__right max-w-[400px] 2xl:max-w-[440px] w-full mt-0 lg:mt-16 mb-16 bg-white pb-6 rounded-lg p-[26px] md:p-8 flex flex-col gap-7">
             <header>
                 <p className="text-secondary/80">Ravis de vous revoir!</p>
-                <h4 className="text-2xl mt-1  text-secondary font-semibold">Se connecter à votre compte</h4>
+                <h4 className="text-2xl mt-1 te text-secondary font-semibold">Se connecter à votre compte</h4>
             </header>
 
             <FormProvider {...form}>

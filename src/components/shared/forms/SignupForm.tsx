@@ -18,6 +18,9 @@ import {
 } from "../ui/select"
 import { AVALAIBLE_LOCATION } from "../../../helpers/constants";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import authActions from "../../../actions/auth.actions";
+import useLoading from "../../../hooks/useLoading";
 
 /**
  * A component that renders a form for a user to signUp.
@@ -26,6 +29,7 @@ import { Link } from "react-router-dom";
  */
 const SignupForm: FC = (): JSX.Element => {
     const [show, setShow] = useState<boolean>(false);
+    const { loading, stopLoading, startLoading } = useLoading();
     const form = useForm<SignupSchemaTypes>({
         resolver: zodResolver(signupSchema),
         defaultValues: {
@@ -37,7 +41,23 @@ const SignupForm: FC = (): JSX.Element => {
     });
 
     const handleSubmit = async (data: SignupSchemaTypes) => {
-        console.log(data);
+        startLoading();
+
+        const response = await authActions.SIGNUP(data);
+
+        if (response.status === "success") {
+            toast.success("Nous vous avons envoyé un email de vérification !!!", {
+                position: "bottom-center",
+                autoClose: 5000,
+            });
+            stopLoading();
+        } else {
+            toast.error("Une erreur s'est produite !!!", {
+                position: "bottom-center",
+                autoClose: 5000,
+            });
+            stopLoading();
+        }
     };
 
     return (
@@ -78,7 +98,7 @@ const SignupForm: FC = (): JSX.Element => {
                                         label="Pseudo"
                                         {...field}
                                         className="text-base"
-                                        type="email"
+                                        type="text"
                                     />
                                 </FormControl>
                                 <FormMessage />
@@ -132,7 +152,7 @@ const SignupForm: FC = (): JSX.Element => {
                             Se souvenir de moi
                         </label>
                     </div>
-                    <Button type="submit" variant="secondary" className="mt-3">Créér un compte</Button>
+                    <Button type="submit" isLoading={loading} variant="secondary" className="mt-3">Créér un compte</Button>
                 </form>
             </FormProvider>
 

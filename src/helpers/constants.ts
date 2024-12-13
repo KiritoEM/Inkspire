@@ -46,3 +46,5 @@ export const AVALAIBLE_LOCATION = [
     "Nosy Be",
     "Ambanja"
 ];
+
+export const NODE_LOCAL_URL = "http://localhost:3003";
