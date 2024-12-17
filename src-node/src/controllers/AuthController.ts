@@ -10,6 +10,7 @@ import { SignupSchema } from "@/schemas/SchemaTypes";
 import AuthServices from "@/services/authServices";
 import googleClient from "@/lib/googleClient";
 import { TokenPayload } from "google-auth-library";
+import { TokenExpiredError } from "jsonwebtoken";
 
 /**
  * Create a new account
@@ -77,15 +78,23 @@ const signIn = async (req: Request, res: Response): Promise<Response> => {
     return sendResponse(res, SUCCESS_CODE.CREATED, "User logIn successfully !!!", { token: userToken });
 }
 
+/**
+ * Sign in a user using Google 0Auth
+ * 
+ * @param req The request object containing the 0Auth token
+ * @param res The response object 
+ * @returns Response object containing a JWT token 
+ */
 const google0Auth = async (req: Request, res: Response): Promise<Response> => {
     const { token } = req.params;
 
-    const ticket = await googleClient.verifyIdToken({
-        idToken: token,
-        audience: `${process.env.GOOGLE_CLIENT_ID}`
+    const response = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
     });
 
-    const payload = ticket.getPayload();
+    const payload = await response.json();
 
     const user = await AuthServices.signin0Auth(payload as TokenPayload);
 
@@ -95,7 +104,7 @@ const google0Auth = async (req: Request, res: Response): Promise<Response> => {
 
     const userToken = createJWT({ ...user });
 
-    return sendResponse(res, SUCCESS_CODE.CREATED, "User logIn successfully !!!", { token: userToken });
+    return sendResponse(res, SUCCESS_CODE.OK, "User logIn successfully !!!", { token: userToken });
 }
 
 export default { signIn, signUp, google0Auth };

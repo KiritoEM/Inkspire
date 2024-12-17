@@ -7,7 +7,7 @@ import { NextFunction, Request, Response } from "express";
  * @param {Function} method
  * @returns {Function} A middleware function that handles errors.
  */
-const errorHandler = (method: (req: Request, res: Response, next: NextFunction) => Promise<void>) => {
+const errorHandler = (method: Function) => {
     return async (req: Request, res: Response, next: NextFunction) => {
         try {
             await method(req, res, next);
@@ -29,4 +29,4 @@ const errorHandler = (method: (req: Request, res: Response, next: NextFunction) 
     };
 };
 
-export { errorHandler };
+export default errorHandler;

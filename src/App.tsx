@@ -1,15 +1,15 @@
-import { Fragment } from "react/jsx-runtime";
 import AppRoutes from "./routes";
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 const queryClient = new QueryClient();
 
 const App = () => {
   return (
-    <Fragment>
+    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
       <QueryClientProvider client={queryClient}>
         <AppRoutes />
 
@@ -27,7 +27,7 @@ const App = () => {
 
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
-    </Fragment>
+    </GoogleOAuthProvider>
   );
 };
 

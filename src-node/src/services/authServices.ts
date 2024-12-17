@@ -71,9 +71,7 @@ const loginUser = async (userData: LoginSchema): Promise<User | null> => {
 const signin0Auth = async (payload: TokenPayload): Promise<User | null> => {
     let user = await prisma.user.findUnique({
         where: {
-            email: payload?.email,
-            avatar: payload?.picture,
-            password: PASSWORD_0AUTH
+            email: payload?.email
         }
     });
 

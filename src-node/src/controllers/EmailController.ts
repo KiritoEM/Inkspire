@@ -21,8 +21,6 @@ const sendAuthEmail = async (req: Request, res: Response): Promise<Response> => 
 
     const accountExist = await AuthServices.checkUser(user_vd.email);
 
-    (user_vd)
-
     if (accountExist) {
         return sendErrorResponse(res, ERROR_CODE.BAQ_REQUEST, "User already exist with this email !!!")
     }
@@ -31,7 +29,6 @@ const sendAuthEmail = async (req: Request, res: Response): Promise<Response> => 
 
     const emailSent = sendEmail(user_vd.email, TWO_STEP_HTML(emailToken as string), "Veuillez cliquez sur le bouton ci dessous pour confirmer votre inscription sur Inkspire");
 
-    ("send")
     if (await emailSent) {
         return sendResponse(res, SUCCESS_CODE.OK, "Email sent successfully !!!", { emailToken });
     }

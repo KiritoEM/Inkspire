@@ -8,7 +8,7 @@ import { FloatingLabelInput } from "./FloatingInput";
 import { Eye, EyeOff } from "lucide-react";
 import { Checkbox } from "../ui/checkbox";
 import { Button } from "../ui/button";
-import GoogleauthForm from "./GoogleauthForm";
+import SocialauthForm from "./SocialauthForm";
 import { Link } from "react-router-dom";
 import authActions from "../../../actions/auth.actions";
 import { toast } from "react-toastify";
@@ -116,7 +116,7 @@ const LoginForm: FC = (): JSX.Element => {
                 <div className="line flex-1 h-[1px] bg-input"></div>
             </div>
 
-            <GoogleauthForm />
+            <SocialauthForm />
 
             <p className="text-secondary text-center">Nouveau ici?  <Link to="/signup" replace><b className="text-blue-500">Créér un compte</b></Link></p>
         </div>

@@ -8,7 +8,7 @@ import { FloatingLabelInput } from "./FloatingInput";
 import { Eye, EyeOff } from "lucide-react";
 import { Checkbox } from "../ui/checkbox";
 import { Button } from "../ui/button";
-import GoogleauthForm from "./GoogleauthForm";
+import SocialauthForm from "./SocialauthForm";
 import {
     Select,
     SelectContent,
@@ -188,7 +188,7 @@ const SignupForm: FC = (): JSX.Element => {
                 <div className="line flex-1 h-[1px] bg-input"></div>
             </div>
 
-            <GoogleauthForm />
+            <SocialauthForm />
 
             <p className="text-secondary text-center">Vous avez déja un compte? <Link to="/" replace><b className="text-blue-500">Se connecter</b></Link></p>
         </div>

@@ -1,5 +1,5 @@
 import { Request, Response, Router } from "express";
-import { erroHandler as err_hdl } from "@/middlewares/error";
+import err_hdl from "@/middlewares/error";
 import EmailController from "@/controllers/EmailController";
 
 const EmailRouter: Router = Router();
