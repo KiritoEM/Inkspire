@@ -6,6 +6,8 @@ export const TOKEN_SECRET = "f0Gamx5LfHZIlHbPXkKP52rTlyGBfvllZQ0rd6c6ppxu0zyIrTu
 
 export const EMAIL_TOKEN_SECRET = "KmGzkxV7gcHWGr0dI5bUU0MUB3425TAT4Y6eCU1zYZ5lUXvJQMOtGiD4D0LOvAwx";
 
+export const PASSWORD_0AUTH = "miiU3IkjGsTrfqu3YJCsxZbzjGVuK6jBDZcAmu7"
+
 export const TOKEN_EXPIRED = { expiresIn: "27d" };
 
 export const EMAIL_TOKEN_EXPIRED = { expiresIn: "365d" };

@@ -8,6 +8,8 @@ import { createJWT, decodeJWT } from "@/lib/jwt";
 import { SignupWithJWT } from "./helpers/types";
 import { SignupSchema } from "@/schemas/SchemaTypes";
 import AuthServices from "@/services/authServices";
+import googleClient from "@/lib/googleClient";
+import { TokenPayload } from "google-auth-library";
 
 /**
  * Create a new account
@@ -75,4 +77,25 @@ const signIn = async (req: Request, res: Response): Promise<Response> => {
     return sendResponse(res, SUCCESS_CODE.CREATED, "User logIn successfully !!!", { token: userToken });
 }
 
-export default { signIn, signUp };
+const google0Auth = async (req: Request, res: Response): Promise<Response> => {
+    const { token } = req.params;
+
+    const ticket = await googleClient.verifyIdToken({
+        idToken: token,
+        audience: `${process.env.GOOGLE_CLIENT_ID}`
+    });
+
+    const payload = ticket.getPayload();
+
+    const user = await AuthServices.signin0Auth(payload as TokenPayload);
+
+    if (!user) {
+        return sendErrorResponse(res, ERROR_CODE.BAQ_REQUEST, "An error was occured when logIn user with Google0Auth !!!")
+    }
+
+    const userToken = createJWT({ ...user });
+
+    return sendResponse(res, SUCCESS_CODE.CREATED, "User logIn successfully !!!", { token: userToken });
+}
+
+export default { signIn, signUp, google0Auth };
