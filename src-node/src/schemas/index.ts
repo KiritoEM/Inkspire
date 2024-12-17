@@ -12,4 +12,9 @@ const loginSchema = z.strictObject({
     password: z.string().min(8, { message: "Password must be 8 characters !!!" }),
 })
 
-export { signupSchema, loginSchema }
+const postSchema = z.strictObject({
+    title: z.string().min(1, { message: "Title is required !!!" }),
+    description: z.string().min(1, { message: "Description is required !!!" }),
+})
+
+export { signupSchema, loginSchema, postSchema }

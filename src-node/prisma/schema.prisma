@@ -27,11 +27,22 @@ model Post {
   id Int @id @default(autoincrement())
   title String @db.Char(150)
   description String 
+  createdAt DateTime @default(now())
+  images Image[]
   user User? @relation(fields: [userId], references: [id])
   userId Int?
 
   @@unique([id, userId])
   @@map("posts")
+}
+
+model Image {
+  id        Int    @id @default(autoincrement())
+  url       String 
+  post      Post   @relation(fields: [postId], references: [id])
+  postId    Int
+
+  @@map("images")
 }
 
 enum Role {

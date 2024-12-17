@@ -8,9 +8,7 @@ import { createJWT, decodeJWT } from "@/lib/jwt";
 import { SignupWithJWT } from "./helpers/types";
 import { SignupSchema } from "@/schemas/SchemaTypes";
 import AuthServices from "@/services/authServices";
-import googleClient from "@/lib/googleClient";
 import { TokenPayload } from "google-auth-library";
-import { TokenExpiredError } from "jsonwebtoken";
 
 /**
  * Create a new account
