@@ -6,13 +6,13 @@ const isAuthentificated = (req: Request, res: Response, next: NextFunction) => {
     const bearerHeader = req.headers["authorization"];
 
     if (!bearerHeader || !bearerHeader?.startsWith(("Bearer"))) {
-        sendErrorResponse(res, ERROR_CODE.UNAUTHORIZED, "Unauthorized : Missing or invalid token  !!!");
+        return sendErrorResponse(res, ERROR_CODE.UNAUTHORIZED, "Unauthorized : Missing or invalid token  !!!");
     }
 
     const token = bearerHeader?.split(" ")[1];
 
     if (!token) {
-        sendErrorResponse(res, ERROR_CODE.UNAUTHORIZED, "Unauthorized : Token not provided !!!");
+        return sendErrorResponse(res, ERROR_CODE.UNAUTHORIZED, "Unauthorized : Token not provided !!!");
     }
 
     next();
