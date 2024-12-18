@@ -2,6 +2,7 @@ import { Router } from "express";
 import { isAuthentificated } from "@/middlewares/auth";
 import upload from "@/middlewares/upload";
 import PostController from "@/controllers/PostController";
+import err_hdl from "@/middlewares/error";
 
 const PostRouter: Router = Router();
 
@@ -13,7 +14,7 @@ PostRouter.post(
         fileField: "picture1",
         uploadMethod: "single"
     }),
-    PostController.createPost
+    err_hdl(PostController.createPost)
 );
 
 export default PostRouter;
