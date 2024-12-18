@@ -1,23 +1,34 @@
 import { ERROR_CODE, SUCCESS_CODE } from "@/helpers/constants";
-import parseWithSchema from "@/helpers/parseWithSchema"
+import parseWithSchema from "@/helpers/parseWithSchema";
 import { sendErrorResponse, sendResponse } from "@/helpers/sendResponse";
 import { postSchema } from "@/schemas";
 import postServices from "@/services/postServices";
+import { convertObjectToArray } from "@/utils";
 import { Request, Response } from "express";
 
 const createPost = async (req: Request, res: Response): Promise<Response> => {
     const postDetails = req.body;
     const { userId } = req.params;
 
-    // const post_vd = parseWithSchema({ data: postDetails, schema: postSchema, errorMessage: "An error was occured in postZodSchema !!!" });
+    const isMultipart = Array.isArray(req.files) || Object.keys(req.files).length > 1;
+    const files: UploadFileTypes.File[] = isMultipart
+        ? convertObjectToArray(req.files) as UploadFileTypes.File[]
+        : [req.files as unknown as UploadFileTypes.File];
 
-    // const post = await postServices.saveNewPost(post_vd, parseInt(userId));
+    const post_vd = parseWithSchema({
+        data: postDetails,
+        schema: postSchema,
+        errorMessage: "Validation error in post schema!"
+    });
 
-    // if (!post) {
-    //     return sendErrorResponse(res, ERROR_CODE.BAQ_REQUEST, "An error was occured when creating user !!!")
-    // }
+    // Save the new post
+    const post = await postServices.saveNewPost(post_vd, parseInt(userId), files);
 
-    return sendResponse(res, SUCCESS_CODE.CREATED, "Post created successfully !!!");
-}
+    if (!post) {
+        return sendErrorResponse(res, ERROR_CODE.BAD_REQUEST, "Error occurred while creating the post!");
+    }
 
-export default { createPost }
+    return sendResponse(res, SUCCESS_CODE.CREATED, "Post created successfully!", post);
+};
+
+export default { createPost };

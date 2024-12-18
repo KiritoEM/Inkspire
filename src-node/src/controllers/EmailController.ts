@@ -22,7 +22,7 @@ const sendAuthEmail = async (req: Request, res: Response): Promise<Response> => 
     const accountExist = await AuthServices.checkUser(user_vd.email);
 
     if (accountExist) {
-        return sendErrorResponse(res, ERROR_CODE.BAQ_REQUEST, "User already exist with this email !!!")
+        return sendErrorResponse(res, ERROR_CODE.BAD_REQUEST, "User already exist with this email !!!")
     }
 
     const emailToken = createJWT({ ...user_vd }, EMAIL_TOKEN_SECRET, EMAIL_TOKEN_EXPIRED);
@@ -33,7 +33,7 @@ const sendAuthEmail = async (req: Request, res: Response): Promise<Response> => 
         return sendResponse(res, SUCCESS_CODE.OK, "Email sent successfully !!!", { emailToken });
     }
 
-    return sendErrorResponse(res, ERROR_CODE.BAQ_REQUEST, "An error was occured when sending twoStep email !!!");
+    return sendErrorResponse(res, ERROR_CODE.BAD_REQUEST, "An error was occured when sending twoStep email !!!");
 }
 
 export default { sendAuthEmail }

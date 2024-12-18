@@ -10,7 +10,7 @@ PostRouter.post(
     isAuthentificated,
     (req, res, next) => upload(req, res, next, {
         fileTypes: "image",
-        fileField: "file",
+        fileField: "picture1",
         uploadMethod: "single"
     }),
     PostController.createPost

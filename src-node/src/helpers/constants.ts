@@ -23,7 +23,7 @@ export const TWO_STEP_HTML = (token: string) => {
 }
 
 export enum ERROR_CODE {
-    BAQ_REQUEST = 400,
+    BAD_REQUEST = 400,
     UNAUTHORIZED = 401,
     FORBIDDEN = 403,
     NOT_FOUND = 404,
@@ -53,6 +53,5 @@ export const ALLOWED_PDF_TYPES = ["application/pdf"];
 export const ALL_TYPES = [...ALLOWED_IMAGE_TYPES, ...ALLOWED_PDF_TYPES, ...ALLOWED_VIDEOS_TYPES];
 
 export const FILE_UPLOAD_TYPES_VALUES = ["image", "video", "pdf", "other"] as const;
-
 
 

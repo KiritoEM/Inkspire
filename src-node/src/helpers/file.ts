@@ -1,3 +1,4 @@
+import { formateFilename } from "@/utils";
 import { ALL_TYPES, ALLOWED_IMAGE_TYPES, ALLOWED_PDF_TYPES, ALLOWED_VIDEOS_TYPES } from "./constants";
 import { FileUploadTypes } from "./types";
 
@@ -22,4 +23,14 @@ const verifyFileType = (fileType: FileUploadTypes, mimetype: string): boolean =>
     return false;
 }
 
-export { verifyFileType }
+const uploadFile = (file: UploadFileTypes.File, path: string) => {
+    file.mv(`${path}/${formateFilename(file.name)}`, (err) => {
+        if (err) {
+            throw new Error(`An error was occured when uploading file !!!); ${err}`);
+        }
+
+        console.log("File uploaded successfully");
+    })
+}
+
+export { verifyFileType, uploadFile }

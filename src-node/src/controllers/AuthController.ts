@@ -21,19 +21,19 @@ const signUp = async (req: Request, res: Response): Promise<Response> => {
     const { token } = req.params;
 
     if (!token) {
-        return sendErrorResponse(res, ERROR_CODE.BAQ_REQUEST, "Not token provided !!!")
+        return sendErrorResponse(res, ERROR_CODE.BAD_REQUEST, "Not token provided !!!")
     }
 
     let userPayload = decodeJWT(token, EMAIL_TOKEN_SECRET) as SignupWithJWT;
 
     if (userPayload instanceof Error) {
-        return sendErrorResponse(res, ERROR_CODE.BAQ_REQUEST, userPayload.message);
+        return sendErrorResponse(res, ERROR_CODE.BAD_REQUEST, userPayload.message);
     }
 
     const accountExist = await AuthServices.checkUser(userPayload.email);
 
     if (accountExist) {
-        return sendErrorResponse(res, ERROR_CODE.BAQ_REQUEST, "User already exist with this email !!!")
+        return sendErrorResponse(res, ERROR_CODE.BAD_REQUEST, "User already exist with this email !!!")
     }
 
     const userData: SignupSchema = {
@@ -46,7 +46,7 @@ const signUp = async (req: Request, res: Response): Promise<Response> => {
     const user = await AuthServices.createAccount(userData);
 
     if (!user) {
-        return sendErrorResponse(res, ERROR_CODE.BAQ_REQUEST, "An error was occured when creating user !!!")
+        return sendErrorResponse(res, ERROR_CODE.BAD_REQUEST, "An error was occured when creating user !!!")
     }
 
     const userToken = createJWT({ ...userData });
@@ -68,7 +68,7 @@ const signIn = async (req: Request, res: Response): Promise<Response> => {
     const user = await AuthServices.loginUser(user_vd);
 
     if (!user) {
-        return sendErrorResponse(res, ERROR_CODE.BAQ_REQUEST, "An error was occured when creating user !!!")
+        return sendErrorResponse(res, ERROR_CODE.BAD_REQUEST, "An error was occured when creating user !!!")
     }
 
     const userToken = createJWT({ ...user_vd });
@@ -97,7 +97,7 @@ const google0Auth = async (req: Request, res: Response): Promise<Response> => {
     const user = await AuthServices.signin0Auth(payload as TokenPayload);
 
     if (!user) {
-        return sendErrorResponse(res, ERROR_CODE.BAQ_REQUEST, "An error was occured when logIn user with Google0Auth !!!")
+        return sendErrorResponse(res, ERROR_CODE.BAD_REQUEST, "An error was occured when logIn user with Google0Auth !!!")
     }
 
     const userToken = createJWT({ ...user });
