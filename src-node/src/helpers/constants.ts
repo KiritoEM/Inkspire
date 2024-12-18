@@ -30,7 +30,8 @@ export enum ERROR_CODE {
     METHOD_NOT_ALLOWED = 405,
     INTERNAL_SERVER_ERROR = 500,
     NOT_IMPLEMENTED = 501,
-    BAD_GATEWAY = 502
+    BAD_GATEWAY = 502,
+    INVALID_FILE_TYPE = 422
 }
 
 export enum SUCCESS_CODE {
@@ -38,4 +39,20 @@ export enum SUCCESS_CODE {
     CREATED = 201,
     ACCEPTED = 202,
 }
+
+export const UPLOAD_OPTIONS = {
+    limits: { fileSize: 50 * 1024 * 1024 },
+}
+
+export const ALLOWED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/jpg", "image/webp", "image/gif", "image/svg+xml"];
+
+export const ALLOWED_VIDEOS_TYPES = ["video/mpeg", "video/quicktime", "image/webm"];
+
+export const ALLOWED_PDF_TYPES = ["application/pdf"];
+
+export const ALL_TYPES = [...ALLOWED_IMAGE_TYPES, ...ALLOWED_PDF_TYPES, ...ALLOWED_VIDEOS_TYPES];
+
+export const FILE_UPLOAD_TYPES_VALUES = ["image", "video", "pdf", "other"] as const;
+
+
 

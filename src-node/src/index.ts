@@ -1,3 +1,5 @@
+/// <reference path="../@types/express/index.d.ts" />
+
 import app from "server";
 import http from "http";
 import { PORT } from "helpers/constants";
