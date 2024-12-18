@@ -6,6 +6,18 @@ type parseWithSchemaType<T> = {
     errorMessage: string;
 };
 
+/**
+ * Parses the given data against the provided Zod schema.
+ *
+ * @template T - The type of the schema.
+ * @param {parseWithSchemaType<T>} param - An object containing the data to be parsed, the schema, and an error message.
+ * @param {unknown} param.data - The data to be validated 
+ * @param {ZodSchema<T>} param.schema - The Zod schema to validate the data
+ * @param {string} param.errorMessage - The error message when not recognized
+ * @returns {T} - The parsed data  if validated
+ * @throws Error
+ */
+
 const parseWithSchema = <T>({
     data,
     schema,

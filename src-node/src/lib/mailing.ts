@@ -14,7 +14,7 @@ const transporter = nodemailer.createTransport({
  * @param {string} email adress
  * @param {string} html The HTML content 
  * @param {string} text The text content 
- * @returns {Promise<unknown>} The promise returned by transporter.sendMail
+ * @returns [Promise<unknown>]
  */
 
 const sendEmail = (email: string, html: string, text: string) => {

@@ -4,8 +4,8 @@ import { hashSync, compare } from "bcrypt";
 /**
  * Hashes a plain text password using bcrypt
  * 
- * @param password - The plain text password to be hashed.
- * @returns The hashed password 
+ * @param {String} password - The plain text password to be hashed.
+ * @returns {String} The hashed password 
 
  */
 const hashPassword = (password: string): string => {
@@ -15,9 +15,9 @@ const hashPassword = (password: string): string => {
 /**
  * Compares a plain text password against a hashed password.
  * 
- * @param password - The plain text password 
- * @param hashedPassword - The hashed password 
- * @returns A boolean 
+ * @param {String} password - The plain text password 
+ * @param {String} hashedPassword - The hashed password 
+ * @returns {Promise<boolean>} 
  */
 const comparePassword = async (password: string, hashedPassword: string): Promise<boolean> => {
     return await compare(password, hashedPassword);

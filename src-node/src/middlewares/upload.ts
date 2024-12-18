@@ -10,6 +10,19 @@ type FileUploadOptions = {
     uploadMethod?: "multiple" | "single";
 };
 
+/**
+ * Middleware to handle file upload.
+ *
+ * @param {Request} req - The request object
+ * @param {Response} res - The response object
+ * @param {NextFunction} next - The next middleware function
+ * @param {FileUploadOptions} options - The options object containing
+ *   - fileTypes - The type of files 
+ *   - fileField - The name of the input field 
+ *   - uploadMethod - The upload method
+ *
+ * @returns {Promise<Reponse | void>}
+ */
 const upload = async (
     req: Request,
     res: Response,

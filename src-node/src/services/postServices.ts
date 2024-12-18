@@ -5,6 +5,15 @@ import path from "path";
 
 export const POST_PATH_UPLOAD = path.join(__dirname, "../../uploads", "posts");
 
+/**
+ * Saves a new post in the database.
+ *
+ * @param {PostSchema} postData - The post data
+ * @param {number} userId - The user id
+ * @param {UploadFileTypes.File[]} images - The images to upload
+ * @returns {Promise<PostSchema>}
+ * @throws {Error} 
+ */
 const saveNewPost = async (
     postData: PostSchema,
     userId: number,

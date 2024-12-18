@@ -6,6 +6,13 @@ import postServices from "@/services/postServices";
 import { convertObjectToArray } from "@/utils";
 import { Request, Response } from "express";
 
+/**
+ * Create a new post
+ * 
+ * @param req The request object
+ * @param res The response object
+ * @returns A promise resolving to a response object
+ */
 const createPost = async (req: Request, res: Response): Promise<Response> => {
     const postDetails = req.body;
     const { userId } = req.params;
@@ -21,7 +28,6 @@ const createPost = async (req: Request, res: Response): Promise<Response> => {
         errorMessage: "Validation error in post schema!"
     });
 
-    // Save the new post
     const post = await postServices.saveNewPost(post_vd, parseInt(userId), files);
 
     if (!post) {

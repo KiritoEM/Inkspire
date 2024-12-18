@@ -4,10 +4,10 @@ import { JsonWebTokenError, JwtPayload, NotBeforeError, sign, TokenExpiredError,
 /**
  * Creates a JSON Web Token (JWT)
  * 
- * @param data the payload data 
- * @param tokenSecret the secret key 
- * @param tokenExpiration the expiration time of the JWT
- * @returns a Promise with the JWT string
+ * @param {JwtPayload} data the payload data 
+ * @param {String} tokenSecret the secret key 
+ * @param {{ expiresIn: String }} tokenExpiration the expiration time of the JWT
+ * @returns {Promise<String>}
  */
 const createJWT = (data: JwtPayload, tokenSecret?: string, tokenExpiration?: { expiresIn: string }) => {
     if (Object.keys(data).length === 0) {
@@ -23,9 +23,9 @@ const createJWT = (data: JwtPayload, tokenSecret?: string, tokenExpiration?: { e
 /**
  * Verifies a JWT token
  * 
- * @param token the JWT token to verify
- * @param tokenSecret the secret key 
- * @returns the decoded payload of the JWT token 
+ * @param {String} token the JWT token to verify
+ * @param {String} tokenSecret -  the secret key 
+ * @returns {JWTPayload}
  */
 const decodeJWT = (token: string, tokenSecret?: string) => {
     try {
