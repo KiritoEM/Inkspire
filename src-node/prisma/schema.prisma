@@ -18,6 +18,8 @@ model User {
   role Role @default(USER)
   banned Boolean? @default(false)
   posts Post[]
+  followers Follower[] @relation("followerRelation")
+  followed Follower[] @relation("followedRelation")
 
   @@unique([id, email, pseudo])
   @@map("user")
@@ -43,6 +45,17 @@ model Image {
   postId    Int
 
   @@map("images")
+}
+
+model Follower {
+  id Int @id @default(autoincrement())
+  follower User @relation("followerRelation", fields: [followerId], references: [id])
+  followed User @relation("followedRelation", fields: [followedId], references: [id])
+  followerId Int
+  followedId Int
+
+  @@unique([followerId, followedId])
+  @@map("follower")
 }
 
 enum Role {

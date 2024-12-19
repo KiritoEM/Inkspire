@@ -11,8 +11,7 @@ PostRouter.post(
     isAuthentificated,
     (req, res, next) => upload(req, res, next, {
         fileTypes: "image",
-        fileField: "picture1",
-        uploadMethod: "single"
+        uploadMethod: "multiple"
     }),
     err_hdl(PostController.createPost)
 );
