@@ -13,7 +13,7 @@ const main = async () => {
   const server = http.createServer(app);
 
   server.listen(PORT, () => {
-    (`Server is running at http://localhost:${PORT}`);
+    console.log(`Server is running at http://localhost:${PORT}`);
   });
 }
 
