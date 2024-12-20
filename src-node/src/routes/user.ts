@@ -21,6 +21,14 @@ UserRouter.put(
     err_hdl(UserController.acceptFollowRequest)
 );
 
+//delete follow_request
+UserRouter.delete(
+    "/delete_follow_request/:requestId",
+    checkBanned,
+    isAuthentificated,
+    err_hdl(UserController.removeFollowRequest)
+);
+
 //get user_informations by his id
 UserRouter.get(
     "/:userId",

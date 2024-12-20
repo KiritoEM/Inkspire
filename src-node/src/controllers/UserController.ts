@@ -61,4 +61,20 @@ const getUserById = async (req: Request, res: Response) => {
     return sendResponse(res, SUCCESS_CODE.OK, "user fetched successfully!", { user });
 }
 
-export default { sendFollowRequest, acceptFollowRequest, getUserById }
+const removeFollowRequest = async (req: Request, res: Response) => {
+    const { requestId } = req.params;
+
+    if (!requestId) {
+        return sendErrorResponse(res, ERROR_CODE.NOT_FOUND, "No requestId provided !!!");
+    }
+
+    const followRequest = await UserServices.deleteFollowRequest(parseInt(requestId));
+
+    if (!followRequest) {
+        return sendErrorResponse(res, ERROR_CODE.BAD_REQUEST, "An error was occured when  deleting follow request !!!");
+    }
+
+    return sendResponse(res, SUCCESS_CODE.OK, "follow request removed successfully!", { followRequest });
+}
+
+export default { sendFollowRequest, acceptFollowRequest, getUserById, removeFollowRequest }
