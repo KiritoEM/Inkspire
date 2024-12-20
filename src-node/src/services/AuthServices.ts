@@ -21,11 +21,12 @@ const checkUser = async (email: string): Promise<User | null> => {
     return account;
 };
 
+
 /**
- * Creates a new user account in the database with the provided user data.
+ * Creates a new user in the database 
  * 
- * @param userData - An object containing the user's signup details.
- * @returns A promise resolving to the created user object 
+ * @param {SignupSchema} userData - An object containing the user's email, password, and pseudo.
+ * @returns {Promise<User | null>} A promise resolving to the created user object
  */
 const createAccount = async (userData: SignupSchema): Promise<User | null> => {
     const user = await prisma.user.create({
@@ -40,7 +41,7 @@ const createAccount = async (userData: SignupSchema): Promise<User | null> => {
 };
 
 /**
- * Logs in a user with the provided email and password.
+ * Logs in a user 
  * 
  * @param {LoginSchema} userData - An object containing the user's email and password.
  * @returns {Promise<User | null>} A promise resolving to the user object 
@@ -64,6 +65,7 @@ const loginUser = async (userData: LoginSchema): Promise<User | null> => {
 
 /**
  * Sign In a user with 0Auth
+ * 
  * @param {TokenPayload} payload - The 0auth payload provided by user.
  * @returns {Promise<User | null>} A promise resolving to the user object
  * @throws {Error} If the signin fails.

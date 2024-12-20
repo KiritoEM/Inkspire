@@ -8,12 +8,13 @@ import { sendEmail } from "@/lib/mailing";
 import AuthServices from "@/services/AuthServices";
 
 /**
- * Send a two step verification email to the user
- * 
- * @param req The request object
- * @param res The response object
- * @returns A response object containing a jwt token 
+ * Sends a two-step authentication email for user signup.
+ *
+ * @param {Request} req - The request object 
+ * @param {Response} res - The response object
+ * @returns {Promise<Response>} A response object containing the email token.
  */
+
 const sendAuthEmail = async (req: Request, res: Response): Promise<Response> => {
     const accountDetails = req.body;
 

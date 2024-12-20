@@ -6,13 +6,15 @@ import PostServices from "@/services/PostServices";
 import { convertObjectToArray } from "@/utils";
 import { Request, Response } from "express";
 
+
 /**
- * Create a new post
- * 
- * @param req The request object
- * @param res The response object
- * @returns A promise resolving to a response object
+ * Creates a new post for a user.
+ *
+ * @param {Request} req - The request object 
+ * @param {Response} res - The response object 
+ * @returns {Promise<Response>} - A response object containing the created post
  */
+
 const createPost = async (req: Request, res: Response): Promise<Response> => {
     const postDetails = req.body;
     const { userId } = req.params;

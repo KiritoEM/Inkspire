@@ -3,7 +3,15 @@ import { sendErrorResponse, sendResponse } from "@/helpers/sendResponse";
 import UserServices from "@/services/UserServices";
 import { Request, Response } from "express"
 
-const sendFollowRequest = async (req: Request, res: Response) => {
+/**
+ * Send a follow request to user
+ *
+ * @param {Request} req - The Request object
+ * @param {Response} res - The Response object
+ *
+ * @returns {Promise<Response>} A response object containing a the follow_request 
+ */
+const sendFollowRequest = async (req: Request, res: Response): Promise<Response> => {
     const { receiverId } = req.params;
     const userId = req.user.id;
 
@@ -24,7 +32,15 @@ const sendFollowRequest = async (req: Request, res: Response) => {
     return sendResponse(res, SUCCESS_CODE.CREATED, "Follow request sent successfully!", { follow_request: followRequest });
 }
 
-const acceptFollowRequest = async (req: Request, res: Response) => {
+/**
+ * Accept a follow request
+ *
+ * @param {Request} req - The Request object
+ * @param {Response} res - The Response object
+ *
+ * @returns {Promise<Response>} A response object containing the follower
+ */
+const acceptFollowRequest = async (req: Request, res: Response): Promise<Response> => {
     const { requestId, senderId } = req.params;
     const userId = req.user.id;
 
@@ -45,7 +61,15 @@ const acceptFollowRequest = async (req: Request, res: Response) => {
     return sendResponse(res, SUCCESS_CODE.ACCEPTED, "Follow request confirmed successfully!", { follower });
 }
 
-const getUserById = async (req: Request, res: Response) => {
+/**
+ * Get a user by its id
+ *
+ * @param {Request} req - The Request object
+ * @param {Response} res - The Response object
+ *
+ * @returns {Promise<Response>} A response object containing the user
+ */
+const getUserById = async (req: Request, res: Response): Promise<Response> => {
     const { userId } = req.params;
 
     if (!userId) {
@@ -78,6 +102,14 @@ const removeFollowRequest = async (req: Request, res: Response) => {
 }
 
 
+/**
+ * Remove a follower
+ *
+ * @param {Request} req - The Request object
+ * @param {Response} res - The Response object
+ *
+ * @returns {Promise<Response>} A response object containing the deleted follower
+ */
 const removeFollower = async (req: Request, res: Response) => {
     const { followerId } = req.params;
     const userId = req.user.id;

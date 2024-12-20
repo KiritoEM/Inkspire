@@ -1,6 +1,12 @@
 import { prisma } from "@/database"
 import { FollowRequest, RequestStatus, User } from "@prisma/client";
 
+/**
+ * Find a user by its id and include all the relevant data.
+ * 
+ * @param {String} id The id of the user to find
+ * @returns {Promise<User | null>} The user with all the included data
+ */
 const readUserById = (id: number): Promise<User | null> => {
     const user = prisma.user.findUnique({
         where: { id },
@@ -58,6 +64,15 @@ const createFollowRequest = async (senderId: number, receiverId: number): Promis
     return followRequest;
 }
 
+/**
+ * Confirms a follow request 
+ * 
+ * @param {number} requestId - The ID of the follow request to confirm.
+ * @param {number} senderId - The ID of the user who sent the follow request.
+ * @param {number} receiverId - The ID of the user who received the follow request.
+ * @returns {Promise<Follower>} A promise resolving to the created follower object.
+ */
+
 const confirmFollowRequest = async (requestId: number, senderId: number, receiverId: number) => {
     const followerRes = await prisma.$transaction(async (tx) => {
         const sender = await prisma.user.findUnique({ where: { id: senderId } });
@@ -96,6 +111,12 @@ const confirmFollowRequest = async (requestId: number, senderId: number, receive
     return followerRes;
 }
 
+/**
+ * Deletes a follow request by its ID.
+ * 
+ * @param {String} requestId The ID of the follow request to delete
+ * @returns {Promise<FollowRequest | null>} The deleted follow request
+ */
 const deleteFollowRequest = async (requestId: number): Promise<FollowRequest | null> => {
     return await prisma.followRequest.delete({
         where: {
@@ -104,6 +125,13 @@ const deleteFollowRequest = async (requestId: number): Promise<FollowRequest | n
     })
 }
 
+/**
+ * Remove a follower 
+ * 
+ * @param followerId The ID of the follower to delete
+ * @param followedId The ID of the followed 
+ * @returns The deleted follower object
+ */
 const deleteFollower = async (followerId: number, followedId: number) => {
     return await prisma.follower.delete({
         where: {

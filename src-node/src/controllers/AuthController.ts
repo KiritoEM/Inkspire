@@ -13,9 +13,9 @@ import { TokenPayload } from "google-auth-library";
 /**
  * Create a new account
  * 
- * @param req The request object
- * @param res The response object
- * @returns Response object containing a jwt token 
+ * @param {Request} req - The request object
+ * @param {Response} res - The response object
+ * @returns {Promise<Response>} Response object containing a jwt token 
  */
 const signUp = async (req: Request, res: Response): Promise<Response> => {
     const { token } = req.params;
@@ -53,12 +53,14 @@ const signUp = async (req: Request, res: Response): Promise<Response> => {
     return sendResponse(res, SUCCESS_CODE.CREATED, "Account created successfully !!!", { token: userToken });
 }
 
+
 /**
  * Sign in a user
- * 
- * @param req The request object containing the user's login credentials
- * @param res The response object 
- * @returns Response object containing a JWT token 
+ *
+ * @param {Request} req - The request object
+ * @param {Response} res - The response object
+ *
+ * @returns {Promise<Response>} A response object containing a jwt token
  */
 const signIn = async (req: Request, res: Response): Promise<Response> => {
     const accountDetails = req.body;
@@ -76,12 +78,14 @@ const signIn = async (req: Request, res: Response): Promise<Response> => {
     return sendResponse(res, SUCCESS_CODE.CREATED, "User logIn successfully !!!", { token: userToken });
 }
 
+
 /**
- * Sign in a user using Google 0Auth
+ * Sign in a user with Google 0Auth
  * 
- * @param req The request object containing the 0Auth token
- * @param res The response object 
- * @returns Response object containing a JWT token 
+ * @param {Request} req - The request object
+ * @param {Response} res - The response object
+ * 
+ * @returns {Promise<Response>} A response object containing a jwt token 
  */
 const google0Auth = async (req: Request, res: Response): Promise<Response> => {
     const { token } = req.params;
