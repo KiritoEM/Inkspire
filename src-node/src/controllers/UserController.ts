@@ -3,7 +3,7 @@ import { sendErrorResponse, sendResponse } from "@/helpers/sendResponse";
 import UserServices from "@/services/UserServices";
 import { Request, Response } from "express"
 
-const SendFollowRequest = async (req: Request, res: Response) => {
+const sendFollowRequest = async (req: Request, res: Response) => {
     const { receiverId } = req.params;
     const userId = req.user.id;
 
@@ -24,4 +24,41 @@ const SendFollowRequest = async (req: Request, res: Response) => {
     return sendResponse(res, SUCCESS_CODE.CREATED, "Follow request sent successfully!", { follow_request: followRequest });
 }
 
-export default { SendFollowRequest }
+const acceptFollowRequest = async (req: Request, res: Response) => {
+    const { requestId, receiverId } = req.params;
+    const userId = req.user.id;
+
+    if (!receiverId || !requestId) {
+        return sendErrorResponse(res, ERROR_CODE.NOT_FOUND, "No receiverId or requestId provided !!!");
+    }
+
+    if (parseInt(receiverId) === userId) {
+        return sendErrorResponse(res, ERROR_CODE.NOT_FOUND, "receiverId and senderId must be different !!!");
+    }
+
+    const follower = await UserServices.confirmFollowRequest(parseInt(requestId), userId as number, parseInt(receiverId));
+
+    if (!follower) {
+        return sendErrorResponse(res, ERROR_CODE.BAD_REQUEST, "Error occurred while confirming Follow request !!!");
+    }
+
+    return sendResponse(res, SUCCESS_CODE.ACCEPTED, "Follow request sent successfully!", { follower });
+}
+
+const getUserById = async (req: Request, res: Response) => {
+    const { userId } = req.params;
+
+    if (!userId) {
+        return sendErrorResponse(res, ERROR_CODE.NOT_FOUND, "No userId provided !!!");
+    }
+
+    const user = await UserServices.readUserById(parseInt(userId));
+
+    if (!user) {
+        return sendErrorResponse(res, ERROR_CODE.NOT_FOUND, "No user found with this id !!!");
+    }
+
+    return sendResponse(res, SUCCESS_CODE.OK, "user fetched successfully!", { user });
+}
+
+export default { sendFollowRequest, acceptFollowRequest, getUserById }
