@@ -1,24 +1,33 @@
 import { Server } from "http";
 import { socketConfig } from "./config";
 import { Socket } from "socket.io";
-import registerUserHandlers from "./handlers/userHandlers";
+import userHandlers from "./handlers/userHandlers";
 
 const socket = (server: Server) => {
     const { io } = socketConfig(server);
 
-    const onConnection = (socket: Socket) => {
-        console.log("User connected !!!");
+    //Namespaces
+    const userNamespace = io.of("/user");
+    const chatNamespace = io.of("/chat");
+
+    userNamespace.on("connection", (socket: Socket) => {
+        console.log("User namespace: client connected  !!!");
+
+        let socketIdMap: { [key: string]: string } = {};
+        socketIdMap[socket.userId as unknown as string] = socket.id;
+
+        if (socketIdMap) {
+            console.log("socketMap", socketIdMap);
+        }
 
         //handlers
-        registerUserHandlers(io, socket);
-
+        userHandlers(userNamespace, socket);
 
         socket.on("disconnect", () => {
-            console.log("User disconnected !!!!");
+            console.log("User namespace: client disconnected  !!!");
         });
-    }
+    })
 
-    io.on("connection", onConnection);
 };
 
 export default socket;

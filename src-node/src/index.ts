@@ -1,4 +1,5 @@
 /// <reference path="../@types/express/index.d.ts" />
+/// <reference path="../@types/socket.io/index.d.ts" />
 
 import app from "server";
 import http from "http";

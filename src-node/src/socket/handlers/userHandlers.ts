@@ -1,7 +1,11 @@
-import { Socket, Server as SocketIOServer } from "socket.io";
+import { Namespace, Socket } from "socket.io";
 
-const userHandlers = (io: SocketIOServer, socket: Socket) => {
-    const sendRequest = () => { }
+const userHandlers = (io: Namespace<any>, socket: Socket) => {
+    const sendRequest = (senderId: number, receivedId: number) => {
+        io.to("").emit("");
+    }
+
+    socket.on("user:send_request", sendRequest);
 }
 
-export default userHandlers
+export default userHandlers;
