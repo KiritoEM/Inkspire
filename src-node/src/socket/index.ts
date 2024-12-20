@@ -26,14 +26,13 @@ const socket = async (server: Server) => {
         console.log("Current socketMap:", socketIdMap);
 
         //handlers
-        userHandlers(userNamespace, socket);
+        userHandlers(userNamespace, socket, socketIdMap);
 
         socket.on("disconnect", () => {
             if (userId && socketIdMap[userId]) {
                 delete socketIdMap[userId];
                 console.log(`User namespace: client ${userId} disconnected.`);
             }
-            console.log("Updated socketMap after disconnect:", socketIdMap);
         });
     });
 };
