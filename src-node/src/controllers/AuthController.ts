@@ -100,7 +100,7 @@ const google0Auth = async (req: Request, res: Response): Promise<Response> => {
         return sendErrorResponse(res, ERROR_CODE.BAD_REQUEST, "An error was occured when logIn user with Google0Auth !!!")
     }
 
-    const userToken = createJWT({ ...user });
+    const userToken = createJWT({ id: user.id, role: user.role, banned: user.banned });
 
     return sendResponse(res, SUCCESS_CODE.OK, "User logIn successfully !!!", { token: userToken });
 }
