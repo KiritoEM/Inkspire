@@ -5,7 +5,8 @@ declare global {
         interface Request {
             files: {
                 [key: string]: UploadFileTypes.File | undefined;
-            }
+            },
+            user: any
         }
     }
 

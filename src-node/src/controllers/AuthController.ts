@@ -7,7 +7,7 @@ import { hashPassword } from "@/lib/password";
 import { createJWT, decodeJWT } from "@/lib/jwt";
 import { SignupWithJWT } from "./helpers/types";
 import { SignupSchema } from "@/schemas/SchemaTypes";
-import AuthServices from "@/services/authServices";
+import AuthServices from "@/services/AuthServices";
 import { TokenPayload } from "google-auth-library";
 
 /**
@@ -49,7 +49,7 @@ const signUp = async (req: Request, res: Response): Promise<Response> => {
         return sendErrorResponse(res, ERROR_CODE.BAD_REQUEST, "An error was occured when creating user !!!")
     }
 
-    const userToken = createJWT({ ...userData });
+    const userToken = createJWT({ id: user.id, role: user.role, banned: user.banned });
     return sendResponse(res, SUCCESS_CODE.CREATED, "Account created successfully !!!", { token: userToken });
 }
 
@@ -71,7 +71,7 @@ const signIn = async (req: Request, res: Response): Promise<Response> => {
         return sendErrorResponse(res, ERROR_CODE.BAD_REQUEST, "An error was occured when creating user !!!")
     }
 
-    const userToken = createJWT({ ...user_vd });
+    const userToken = createJWT({ id: user.id, role: user.role, banned: user.banned });
 
     return sendResponse(res, SUCCESS_CODE.CREATED, "User logIn successfully !!!", { token: userToken });
 }

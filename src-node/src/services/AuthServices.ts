@@ -27,7 +27,7 @@ const checkUser = async (email: string): Promise<User | null> => {
  * @param userData - An object containing the user's signup details.
  * @returns A promise resolving to the created user object 
  */
-const createAccount = async (userData: SignupSchema): Promise<SignupSchema | null> => {
+const createAccount = async (userData: SignupSchema): Promise<User | null> => {
     const user = await prisma.user.create({
         data: userData
     });

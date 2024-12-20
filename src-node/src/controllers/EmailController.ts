@@ -5,7 +5,7 @@ import { sendErrorResponse, sendResponse } from "@/helpers/sendResponse";
 import { EMAIL_TOKEN_EXPIRED, EMAIL_TOKEN_SECRET, ERROR_CODE, SUCCESS_CODE, TWO_STEP_HTML } from "@/helpers/constants";
 import { createJWT } from "@/lib/jwt";
 import { sendEmail } from "@/lib/mailing";
-import AuthServices from "@/services/authServices";
+import AuthServices from "@/services/AuthServices";
 
 /**
  * Send a two step verification email to the user

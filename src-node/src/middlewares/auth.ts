@@ -1,5 +1,6 @@
 import { ERROR_CODE } from "@/helpers/constants";
 import { sendErrorResponse } from "@/helpers/sendResponse"
+import { decodeJWT } from "@/lib/jwt";
 import { NextFunction, Request, Response } from "express"
 
 /**
@@ -22,6 +23,10 @@ const isAuthentificated = (req: Request, res: Response, next: NextFunction) => {
     if (!token) {
         return sendErrorResponse(res, ERROR_CODE.UNAUTHORIZED, "Unauthorized : Token not provided !!!");
     }
+
+    req.user = {};
+    const payload = decodeJWT(token);
+    req.user = payload;
 
     next();
 }
