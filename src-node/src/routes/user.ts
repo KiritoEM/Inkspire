@@ -29,6 +29,14 @@ UserRouter.delete(
     err_hdl(UserController.removeFollowRequest)
 );
 
+//remove follower
+UserRouter.delete(
+    "/remove_follower/:followerId",
+    checkBanned,
+    isAuthentificated,
+    err_hdl(UserController.removeFollower)
+);
+
 //get user_informations by his id
 UserRouter.get(
     "/:userId",

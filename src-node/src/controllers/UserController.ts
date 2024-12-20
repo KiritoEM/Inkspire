@@ -77,4 +77,28 @@ const removeFollowRequest = async (req: Request, res: Response) => {
     return sendResponse(res, SUCCESS_CODE.OK, "follow request removed successfully!", { followRequest });
 }
 
-export default { sendFollowRequest, acceptFollowRequest, getUserById, removeFollowRequest }
+
+const removeFollower = async (req: Request, res: Response) => {
+    const { followerId } = req.params;
+    const userId = req.user.id;
+
+    if (!followerId) {
+        return sendErrorResponse(res, ERROR_CODE.NOT_FOUND, "No userId provided !!!");
+    }
+
+    const follower = await UserServices.deleteFollower(parseInt(followerId), userId as number);
+
+    if (!follower) {
+        return sendErrorResponse(res, ERROR_CODE.BAD_REQUEST, "An error was occured when  deleting follower !!!");
+    }
+
+    return sendResponse(res, SUCCESS_CODE.OK, "follower retired successfully!", { follower });
+}
+
+export default {
+    sendFollowRequest,
+    acceptFollowRequest,
+    getUserById,
+    removeFollowRequest,
+    removeFollower
+}

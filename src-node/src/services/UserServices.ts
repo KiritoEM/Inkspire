@@ -104,4 +104,21 @@ const deleteFollowRequest = async (requestId: number): Promise<FollowRequest | n
     })
 }
 
-export default { createFollowRequest, confirmFollowRequest, readUserById, deleteFollowRequest }
+const deleteFollower = async (followerId: number, followedId: number) => {
+    return await prisma.follower.delete({
+        where: {
+            followerId_followedId: {
+                followerId,
+                followedId
+            }
+        }
+    })
+}
+
+export default {
+    createFollowRequest,
+    confirmFollowRequest,
+    readUserById,
+    deleteFollowRequest,
+    deleteFollower
+}
