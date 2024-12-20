@@ -1,10 +1,9 @@
-import { NextFunction } from "express";
-import { Socket } from "socket.io";
+import { DefaultEventsMap, ExtendedError, Socket } from "socket.io";
 
-const socketMiddleware = (socket: Socket, next: NextFunction) => {
+const socketMiddleware = (socket: Socket<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>, next: (err?: ExtendedError | undefined) => void) => {
     try {
-        const userId = socket.handshake.auth.userId;
-        socket.userId = userId;
+        const userId = socket.handshake.query.userId;
+        socket.userId = userId?.toString();
         next();
     } catch (err) {
         next(new Error("Authentication error"));
