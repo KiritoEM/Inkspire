@@ -1,14 +1,15 @@
 import { Router } from "express";
-import { isAuthentificated } from "@/middlewares/auth";
+import { checkBanned, isAuthentificated } from "@/middlewares/auth";
 import UserController from "@/controllers/UserController";
 import err_hdl from "@/middlewares/error";
 
-const FollowerRouter: Router = Router();
+const UserRouter: Router = Router();
 
-FollowerRouter.post(
-    "/send-request/:receiverId",
+UserRouter.post(
+    "/send_request/:receiverId",
+    checkBanned,
     isAuthentificated,
     err_hdl(UserController.SendFollowRequest)
 );
 
-export default FollowerRouter;
+export default UserRouter;

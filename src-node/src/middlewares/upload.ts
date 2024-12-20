@@ -8,6 +8,7 @@ type FileUploadOptions = {
     fileTypes: FileUploadTypes;
     fileField?: string;
     uploadMethod?: "multiple" | "single";
+    optional?: boolean
 };
 
 /**
@@ -20,6 +21,7 @@ type FileUploadOptions = {
  *   - fileTypes - The type of files 
  *   - fileField - The name of the input field 
  *   - uploadMethod - The upload method
+ *   - optional - Whether the file is optional
  *
  * @returns {Promise<Reponse | void>}
  */
@@ -29,7 +31,7 @@ const upload = async (
     next: NextFunction,
     options: FileUploadOptions
 ): Promise<Response | void> => {
-    if (!req.files || typeof req.files !== "object") {
+    if (!options.optional && !req.files || typeof req.files !== "object") {
         return sendErrorResponse(res, ERROR_CODE.NOT_FOUND, "No file uploaded !!!");
     }
 

@@ -11,7 +11,11 @@ const SendFollowRequest = async (req: Request, res: Response) => {
         return sendErrorResponse(res, ERROR_CODE.NOT_FOUND, "No receiverId provided !!!");
     }
 
-    const followRequest = await UserServices.addFollowRequest(userId as number, parseInt(receiverId));
+    if (parseInt(receiverId) === userId) {
+        return sendErrorResponse(res, ERROR_CODE.NOT_FOUND, "receiverId and senderId must be different !!!");
+    }
+
+    const followRequest = await UserServices.createFollowRequest(userId as number, parseInt(receiverId));
 
     if (!followRequest) {
         return sendErrorResponse(res, ERROR_CODE.BAD_REQUEST, "Error occurred while sending Follow request !!!");

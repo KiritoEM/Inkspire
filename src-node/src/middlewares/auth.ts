@@ -2,6 +2,7 @@ import { ERROR_CODE } from "@/helpers/constants";
 import { sendErrorResponse } from "@/helpers/sendResponse"
 import { decodeJWT } from "@/lib/jwt";
 import { NextFunction, Request, Response } from "express"
+import { UserJWTPayload } from "./types";
 
 /**
  * Middleware that checks if user is authentificated
@@ -25,10 +26,17 @@ const isAuthentificated = (req: Request, res: Response, next: NextFunction) => {
     }
 
     req.user = {};
-    const payload = decodeJWT(token);
+    const payload = decodeJWT(token) as UserJWTPayload;
     req.user = payload;
 
     next();
 }
 
-export { isAuthentificated }
+const checkBanned = (req: Request, res: Response, next: NextFunction) => {
+    if (req.user?.banned) {
+        return sendErrorResponse(res, ERROR_CODE.UNAUTHORIZED, "You are banned !!!");
+    }
+    next();
+}
+
+export { isAuthentificated, checkBanned }

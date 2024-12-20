@@ -1,7 +1,7 @@
 import { prisma } from "@/database"
 import { FollowRequest } from "@prisma/client";
 
-const addFollowRequest = async (senderId: number, receiverId: number): Promise<FollowRequest | null> => {
+const createFollowRequest = async (senderId: number, receiverId: number): Promise<FollowRequest | null> => {
     const followRequest = await prisma.followRequest.create({
         data: {
             receiver: {
@@ -16,4 +16,4 @@ const addFollowRequest = async (senderId: number, receiverId: number): Promise<F
     return followRequest;
 }
 
-export default { addFollowRequest }
+export default { createFollowRequest }

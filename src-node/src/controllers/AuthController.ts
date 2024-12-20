@@ -5,7 +5,7 @@ import { sendErrorResponse, sendResponse } from "@/helpers/sendResponse";
 import { EMAIL_TOKEN_SECRET, ERROR_CODE, SUCCESS_CODE } from "@/helpers/constants";
 import { hashPassword } from "@/lib/password";
 import { createJWT, decodeJWT } from "@/lib/jwt";
-import { SignupWithJWT } from "./helpers/types";
+import { SignupWithJWT } from "./types";
 import { SignupSchema } from "@/schemas/SchemaTypes";
 import AuthServices from "@/services/AuthServices";
 import { TokenPayload } from "google-auth-library";
