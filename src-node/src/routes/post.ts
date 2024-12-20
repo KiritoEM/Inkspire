@@ -6,6 +6,7 @@ import err_hdl from "@/middlewares/error";
 
 const PostRouter: Router = Router();
 
+//create a new post
 PostRouter.post(
     "/create/:userId",
     checkBanned,

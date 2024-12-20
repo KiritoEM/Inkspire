@@ -25,24 +25,24 @@ const sendFollowRequest = async (req: Request, res: Response) => {
 }
 
 const acceptFollowRequest = async (req: Request, res: Response) => {
-    const { requestId, receiverId } = req.params;
+    const { requestId, senderId } = req.params;
     const userId = req.user.id;
 
-    if (!receiverId || !requestId) {
-        return sendErrorResponse(res, ERROR_CODE.NOT_FOUND, "No receiverId or requestId provided !!!");
+    if (!senderId || !requestId) {
+        return sendErrorResponse(res, ERROR_CODE.NOT_FOUND, "No senderId or requestId provided !!!");
     }
 
-    if (parseInt(receiverId) === userId) {
+    if (parseInt(senderId) === userId) {
         return sendErrorResponse(res, ERROR_CODE.NOT_FOUND, "receiverId and senderId must be different !!!");
     }
 
-    const follower = await UserServices.confirmFollowRequest(parseInt(requestId), userId as number, parseInt(receiverId));
+    const follower = await UserServices.confirmFollowRequest(parseInt(requestId), parseInt(senderId), userId as number);
 
     if (!follower) {
         return sendErrorResponse(res, ERROR_CODE.BAD_REQUEST, "Error occurred while confirming Follow request !!!");
     }
 
-    return sendResponse(res, SUCCESS_CODE.ACCEPTED, "Follow request sent successfully!", { follower });
+    return sendResponse(res, SUCCESS_CODE.ACCEPTED, "Follow request confirmed successfully!", { follower });
 }
 
 const getUserById = async (req: Request, res: Response) => {

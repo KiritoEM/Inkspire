@@ -1,5 +1,36 @@
 import { prisma } from "@/database"
-import { FollowRequest, User } from "@prisma/client";
+import { FollowRequest, RequestStatus, User } from "@prisma/client";
+
+const readUserById = (id: number): Promise<User | null> => {
+    const user = prisma.user.findUnique({
+        where: { id },
+        include: {
+            followed: {
+                include: {
+                    followed: true
+                }
+            },
+            followers: {
+                include: {
+                    follower: true,
+                }
+            },
+            receivedFollowRequest: {
+                include: {
+                    sender: true
+                }
+            },
+            sendedFollowRequest: {
+                include: {
+                    receiver: true
+                }
+            },
+            posts: true
+        }
+    });
+
+    return user;
+}
 
 /**
  * Create a follow request in the database.
@@ -8,18 +39,20 @@ import { FollowRequest, User } from "@prisma/client";
  * @returns {Promise<FollowRequest | null>} - The created follow request 
  */
 const createFollowRequest = async (senderId: number, receiverId: number): Promise<FollowRequest | null> => {
-    const sender = await prisma.user.findUnique({ where: { id: senderId } });
-    const receiver = await prisma.user.findUnique({ where: { id: receiverId } });
+    const followRequest = await prisma.$transaction(async (tx) => {
+        const sender = await tx.user.findUnique({ where: { id: senderId } })
+        const receiver = await tx.user.findUnique({ where: { id: receiverId } })
 
-    const followRequest = await prisma.followRequest.create({
-        data: {
-            receiver: {
-                connect: { id: receiver?.id }
-            },
-            sender: {
-                connect: { id: sender?.id }
+        return await tx.followRequest.create({
+            data: {
+                receiver: {
+                    connect: { id: receiver?.id }
+                },
+                sender: {
+                    connect: { id: sender?.id }
+                }
             }
-        }
+        })
     })
 
     return followRequest;
@@ -36,7 +69,7 @@ const confirmFollowRequest = async (requestId: number, senderId: number, receive
                 id: followRequest?.id
             },
             data: {
-                status: "ACCEPTED"
+                status: RequestStatus.ACCEPTED
             },
             include: {
                 receiver: true,
@@ -61,21 +94,6 @@ const confirmFollowRequest = async (requestId: number, senderId: number, receive
     })
 
     return followerRes;
-}
-
-const readUserById = (id: number): Promise<User | null> => {
-    const user = prisma.user.findUnique({
-        where: { id },
-        include: {
-            followed: true,
-            followers: true,
-            receivedFollowRequest: true,
-            sendedFollowRequest: true,
-            posts: true
-        }
-    });
-
-    return user;
 }
 
 export default { createFollowRequest, confirmFollowRequest, readUserById }
