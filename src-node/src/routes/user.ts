@@ -6,7 +6,7 @@ import err_hdl from "@/middlewares/error";
 const FollowerRouter: Router = Router();
 
 FollowerRouter.post(
-    "/send-request/:toFollowedId",
+    "/send-request/:receiverId",
     isAuthentificated,
     err_hdl(UserController.SendFollowRequest)
 );

@@ -31,7 +31,7 @@ const createPost = async (req: Request, res: Response): Promise<Response> => {
     const post = await PostServices.saveNewPost(post_vd, parseInt(userId), files);
 
     if (!post) {
-        return sendErrorResponse(res, ERROR_CODE.BAD_REQUEST, "Error occurred while creating the post!");
+        return sendErrorResponse(res, ERROR_CODE.BAD_REQUEST, "Error occurred while creating the post !!!");
     }
 
     return sendResponse(res, SUCCESS_CODE.CREATED, "Post created successfully!", post);

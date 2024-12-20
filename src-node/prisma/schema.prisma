@@ -58,6 +58,7 @@ model FollowRequest {
   receiverId Int
   status RequestStatus @default(PENDING)
 
+  @@unique([senderId, receiverId])
   @@map("follow_request")
 }
 

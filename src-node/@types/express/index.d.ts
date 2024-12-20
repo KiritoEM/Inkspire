@@ -1,3 +1,4 @@
+import { User } from '@prisma/client';
 import { Request } from 'express';
 
 declare global {
@@ -6,7 +7,7 @@ declare global {
             files: {
                 [key: string]: UploadFileTypes.File | undefined;
             },
-            user: any
+            user: Partial<User>
         }
     }
 
