@@ -7,32 +7,35 @@ import socketMiddleware from "@/middlewares/socket";
 const socket = async (server: Server) => {
     const { io } = socketConfig(server);
 
-    //Namespaces
+    // Namespaces
     const userNamespace = io.of("/user");
-    const chatNamespace = io.of("/chat");
 
-    console.log("=============== Socket middleware");
+    // Namespaces middlewares
     userNamespace.use(socketMiddleware);
-    console.log("Socket middleware =============== ");
+
+    const socketIdMap: { [userId: string]: string } = {};
 
     userNamespace.on("connection", (socket: Socket) => {
-        console.log(`User namespace: client ${socket.userId} connected  !!!`);
+        const userId = socket.userId as string;
 
-        let socketIdMap: { [key: string]: string } = {};
-        socketIdMap[socket.userId as unknown as string] = socket.id;
-
-        if (socketIdMap) {
-            console.log("socketMap", socketIdMap);
+        if (userId) {
+            socketIdMap[userId] = socket.id;
+            console.log(`User namespace: client ${userId} connected. Socket ID: ${socket.id}`);
         }
+
+        console.log("Current socketMap:", socketIdMap);
 
         //handlers
         userHandlers(userNamespace, socket);
 
         socket.on("disconnect", () => {
-            console.log("User namespace: client disconnected  !!!");
+            if (userId && socketIdMap[userId]) {
+                delete socketIdMap[userId];
+                console.log(`User namespace: client ${userId} disconnected.`);
+            }
+            console.log("Updated socketMap after disconnect:", socketIdMap);
         });
-    })
-
+    });
 };
 
 export default socket;
