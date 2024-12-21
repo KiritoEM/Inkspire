@@ -143,10 +143,23 @@ const deleteFollower = async (followerId: number, followedId: number) => {
     })
 }
 
+const readFollower_requestById = async (followRequestId: number) => {
+    return await prisma.followRequest.findUnique({
+        where: {
+            id: followRequestId
+        },
+        include: {
+            receiver: true,
+            sender: true
+        }
+    })
+}
+
 export default {
     createFollowRequest,
     confirmFollowRequest,
     readUserById,
     deleteFollowRequest,
-    deleteFollower
+    deleteFollower,
+    readFollower_requestById
 }

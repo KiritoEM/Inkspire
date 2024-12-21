@@ -23,8 +23,6 @@ const socket = async (server: Server) => {
             console.log(`User namespace: client ${userId} connected. Socket ID: ${socket.id}`);
         }
 
-        console.log("Current socketMap:", socketIdMap);
-
         //handlers
         userHandlers(userNamespace, socket, socketIdMap);
 
